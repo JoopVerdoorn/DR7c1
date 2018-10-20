@@ -1,6 +1,3 @@
-using Toybox.Activity as info; 
-
-//! inherit from the view that contains the commonlogic
 class PowerView extends CiqView { 
     hidden var mElapsedPower	   				= 0;
     hidden var mLastLapElapsedPower				= 0;
@@ -21,7 +18,6 @@ class PowerView extends CiqView {
 	var vibrateseconds = 0;  
     hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
     
-	//! it's good practice to always have an initialize, make sure to call your parent class here!
     function initialize() {
         CiqView.initialize();
          var mApp = Application.getApp();
@@ -31,28 +27,6 @@ class PowerView extends CiqView {
          uPowerZones		 = mApp.getProperty("pPowerZones");
         
     }
-
-    //! Calculations we need to do every second even when the data field is not visible
-    function compute(info) {
-        //! If enabled, switch the backlight on in order to make it stay on
-        if (uBacklight) {
-             Attention.backlight(true);
-        }
-
-		//! We only do some calculations if the timer is running
-		if (mTimerRunning) {  
-			jTimertime = jTimertime + 1;
-			//!Calculate lapheartrate
-            mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
-           	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
-
-            //!Calculate lappower
-            mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
-			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;              
-        }
-        
-           
-	}
 
     //! Store last lap quantities and set lap markers after a lap
     function onTimerLap() {

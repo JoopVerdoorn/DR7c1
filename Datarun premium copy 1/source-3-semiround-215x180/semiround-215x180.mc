@@ -14,7 +14,7 @@ class DeviceView extends PowerView {
         
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
-        	if (umyNumber != mtest && jTimertime > 900)  {
+        	if (licenseOK == false && jTimertime > 900)  {
         		uShowDemo = true;        		
         	}
         }

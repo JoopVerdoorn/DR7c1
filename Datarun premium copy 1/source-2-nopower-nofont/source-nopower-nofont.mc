@@ -94,6 +94,10 @@ class PowerView extends CiqView {
     	        fieldValue[i] = Math.round(mETA).toNumber();
         	    fieldLabel[i] = "ETA";
             	fieldFormat[i] = "time";               	        	
+            } else if (metric[i] == 55) {   
+            	fieldValue[i] = (info.currentSpeed != null or info.currentSpeed!=0) ? 100/info.currentSpeed : 0;
+            	fieldLabel[i] = "s/100m";
+        	    fieldFormat[i] = "1decimal";        	    
 	        } else if (metric[i] == 15) {
         	    fieldLabel[i] = "Deviation";
             	fieldFormat[i] = "time";
