@@ -60,7 +60,7 @@
     <string id="lLapPace">Current lap pace</string>
     <string id="lLastLapPace">Last lap pace</string>
     <string id="lAltitude">Altitude</string>
-    <string id="lTEffect">Aerobic training effect</string>
+    <string id="lTEffect">Aerobic training effect (only for FR645(m), Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lETA">Estimated time of arrival (only for FR645(m), Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lETAfrompace">Estimated finished time based on average or last lap pace (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lETAdeviation">Deviation from required finish in hours, minutes and seconds (only for FR645(m), Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>

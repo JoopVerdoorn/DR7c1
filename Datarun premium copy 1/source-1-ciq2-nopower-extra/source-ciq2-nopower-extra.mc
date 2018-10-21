@@ -8,6 +8,10 @@ class CiqView extends ExtramemView {
     var mrealElevationLoss 					= 0;
     var mrealElevationDiff 					= 0;
 
+    function initialize() {
+        ExtramemView.initialize();		
+    }
+
     //! Calculations we need to do every second even when the data field is not visible
     function compute(info) {
         //! If enabled, switch the backlight on in order to make it stay on
@@ -38,7 +42,7 @@ class CiqView extends ExtramemView {
 
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
-		ExtramemView.onUpdate(dc);
+		ExtramemView.onUpdate(dc);		
 	}
 	
 }

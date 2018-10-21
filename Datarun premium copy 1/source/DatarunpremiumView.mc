@@ -193,7 +193,6 @@ class DatarunpremiumView extends Ui.DataField {
     
     //!! this is called whenever the screen needs to be updated
     function onUpdate(dc) {
-
         //! Calculate lap (HR) time
 		var info = Activity.getActivityInfo();
 

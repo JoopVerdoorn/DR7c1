@@ -58,21 +58,6 @@ class CiqView extends ExtramemView {
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
 		ExtramemView.onUpdate(dc);
-
-    	//! Setup back- and foregroundcolours
-		if (uBlackBackground == true ){
-			mColourFont = Graphics.COLOR_WHITE;
-			mColourFont1 = Graphics.COLOR_WHITE;
-			mColourLine = Graphics.COLOR_GREEN;
-			mColourBackGround = Graphics.COLOR_BLACK;
-		} else {
-			mColourFont = Graphics.COLOR_BLACK;
-			mColourFont1 = Graphics.COLOR_BLACK;
-			mColourLine = Graphics.COLOR_BLUE;
-			mColourBackGround = Graphics.COLOR_WHITE;
-		}
-		dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle (0, 0, 240, 240);
         		
 		//!Calculate HR-metrics
 		var info = Activity.getActivityInfo();
@@ -262,11 +247,7 @@ class CiqView extends ExtramemView {
 		}
 		
 		//! Show number of laps or clock with current time in top
-		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-		if (uMilClockAltern == 2) {
-			 dc.drawText(103, -4, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
-			 dc.drawText(140, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
-		} 
+
 	   } 
 	   
 	}

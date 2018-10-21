@@ -81,12 +81,34 @@ class ExtramemView extends DatarunpremiumView {
             	fieldFormat[i] = "0decimal";           	
 			} 
 		}
+
+		//! Conditions for showing the demoscreen       
+        if (uShowDemo == false) {
+        	if (licenseOK == false && jTimertime > 900)  {
+        		uShowDemo = true;        		
+        	}
+        }
+
+	   //! Check whether demoscreen is showed or the metrics 
+	   if (uShowDemo == false ) {
 		//! Show number of laps or clock with current time in top
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		if (uMilClockAltern == 2) {
 			 dc.drawText(103, -4, Graphics.FONT_MEDIUM, mLaps, Graphics.TEXT_JUSTIFY_CENTER);
 			 dc.drawText(140, -1, Graphics.FONT_XTINY, "lap", Graphics.TEXT_JUSTIFY_CENTER);
-		} 		
+		} else if (uMilClockAltern == 1) {		
+			var myTime = Toybox.System.getClockTime(); 
+			var AmPmhour = myTime.hour.format("%02d");
+			AmPmhour = AmPmhour.toNumber();
+			var AmPm = "AM";
+			if (AmPmhour > 12) {
+				AmPm = "PM";
+				AmPmhour = AmPmhour - 12;
+			}
+	    	var strTime = AmPmhour + ":" + myTime.min.format("%02d") + " " + AmPm;
+			dc.drawText(130, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		}
+	   }		
 	}
 	
 }
