@@ -16,16 +16,14 @@ class PowerView extends CiqView {
     var Power2 									= 0;
     var Power3 									= 0;
 	var vibrateseconds = 0;  
-    hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
+
     
     function initialize() {
         CiqView.initialize();
          var mApp = Application.getApp();
          uRequiredPower		 = mApp.getProperty("pRequiredPower");
          uWarningFreq		 = mApp.getProperty("pWarningFreq");
-         uAlertbeep			 = mApp.getProperty("pAlertbeep");
-         uPowerZones		 = mApp.getProperty("pPowerZones");
-        
+         uAlertbeep			 = mApp.getProperty("pAlertbeep");       
     }
 
     //! Store last lap quantities and set lap markers after a lap

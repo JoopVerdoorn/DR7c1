@@ -7,6 +7,7 @@ class CiqView extends ExtramemView {
     var mrealElevationGain 					= 0;
     var mrealElevationLoss 					= 0;
     var mrealElevationDiff 					= 0;
+    hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";    
 
     function initialize() {
         ExtramemView.initialize();		

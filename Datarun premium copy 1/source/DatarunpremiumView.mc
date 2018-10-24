@@ -29,6 +29,8 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var uMilClockAltern = 0;
 	hidden var uShowDemo = false;
 	hidden var umyNumber = 26429769;
+	var uBlackBackground 					= false;
+	
 	hidden var mtest = 63869733;
 	hidden var jTimertime = 0;
 	
@@ -72,6 +74,8 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var uAlertbeep			 		= false;
 	hidden var uNoAlerts 					= false;
 	hidden var PowerWarning 				= 0;
+	hidden var Powerzone					= 0;
+	hidden var HRzone						= 0;
     
     hidden var mStartStopPushed             = 0;    //! Timer value when the start/stop button was last pushed
 
@@ -103,7 +107,7 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var LapHeartrate					= 0;
 	hidden var LastLapHeartrate				= 0;
 	hidden var AverageHeartrate 			= 0; 
-
+	hidden var mLapElapsedDistance 			= 0;
 
     function initialize() {
          DataField.initialize();
@@ -208,7 +212,7 @@ class DatarunpremiumView extends Ui.DataField {
         mLapTimerTime = jTimertime - mLastLapTimeMarker;				
 
         //! Calculate lap distance
-        var mLapElapsedDistance = 0.0;
+        mLapElapsedDistance = 0.0;
         if (info.elapsedDistance != null) {
             mLapElapsedDistance = info.elapsedDistance - mLastLapDistMarker;
         }
@@ -398,6 +402,8 @@ class DatarunpremiumView extends Ui.DataField {
         xl = xl.toNumber();
         yl = yl.toNumber();
 
+		fieldvalue = (metric[counter]==38) ? Powerzone : fieldvalue; 
+		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = Math.round(fieldvalue);
         } else if ( fieldformat.equals("1decimal" ) == true ) {
