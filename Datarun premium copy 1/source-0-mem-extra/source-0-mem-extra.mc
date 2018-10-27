@@ -159,7 +159,7 @@ class ExtramemView extends DatarunpremiumView {
             } else if (uClockFieldMetric == 13) {
         		CFMLabel  = "Req pace ";
         		CFMFormat = "pace";
-        		if (info.elapsedDistance != null and info.timerTime != null and mRacetime != info.timerTime/1000 and mRacetime > info.timerTime/1000) {
+        		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
         			CFMValue = (uRacedistance - info.elapsedDistance) / (mRacetime - info.timerTime/1000);
         		} 
 	        } else if (uClockFieldMetric == 40) {
@@ -193,10 +193,6 @@ class ExtramemView extends DatarunpremiumView {
 			} else if (uClockFieldMetric == 49) {
 	            CFMValue = AverageHeartrate;
     	        CFMLabel = "Avg HR";
-        	    CFMFormat = "0decimal";
-			} else if (uClockFieldMetric == 46) {
-	            CFMValue = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
-    	        CFMLabel = "HR zone";
         	    CFMFormat = "0decimal";        	    
 			} else if (uClockFieldMetric == 50) {
 				CFMValue = (info.currentCadence != null) ? info.currentCadence : 0; 

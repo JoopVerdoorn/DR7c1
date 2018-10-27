@@ -264,7 +264,7 @@ class DatarunpremiumView extends Ui.DataField {
 		var i = 0; 
 	    for (i = 1; i < 8; ++i) {	    
         	if (metric[i] == 0) {
-            	fieldValue[i] = (info.timerTime != null) ? info.timerTime / 1000 : 0;
+            	fieldValue[i] = jTimertime;
             	fieldLabel[i] = "Timer";
             	fieldFormat[i] = "time";   
 	        } else if (metric[i] == 1) {
@@ -276,7 +276,7 @@ class DatarunpremiumView extends Ui.DataField {
         	    fieldLabel[i] = "L-1LapT";
             	fieldFormat[i] = "time";
 			} else if (metric[i] == 3) {
-        	    fieldValue[i] = (info.timerTime != null) ? info.timerTime / (mLaps * 1000) : 0;
+        	    fieldValue[i] = jTimertime / mLaps;
             	fieldLabel[i] = "AvgLapT";
             	fieldFormat[i] = "time";
 	        } else if (metric[i] == 4) {
@@ -322,8 +322,8 @@ class DatarunpremiumView extends Ui.DataField {
             } else if (metric[i] == 13) {
         		fieldLabel[i]  = "Req pace ";
         		fieldFormat[i] = "pace";
-        		if (info.elapsedDistance != null and info.timerTime != null and mRacetime != info.timerTime/1000 and mRacetime > info.timerTime/1000) {
-        			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - info.timerTime/1000);
+        		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
+        			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - jTimertime);
         		} 
 	        } else if (metric[i] == 40) {
     	        fieldValue[i] = (info.currentSpeed != null) ? 3.6*info.currentSpeed*1000/unitP : 0;
@@ -362,14 +362,14 @@ class DatarunpremiumView extends Ui.DataField {
     	        fieldLabel[i] = "Cadence";
         	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 51) {
-		  		fieldValue[i] = (info.altitude != null) ? Math.round(info.altitude).toNumber() : 0;
+		  		fieldValue[i] = (info.altitude != null) ? info.altitude : 0;
+		  		fieldValue[i] = (unitD == 1609.344) ? info.altitude*3.2808 : info.altitude; 
 		       	fieldLabel[i] = "Altitude";
 		       	fieldFormat[i] = "0decimal";        		
         	} else if (metric[i] == 45) {
     	        fieldValue[i] = (info.currentHeartRate != null) ? info.currentHeartRate : 0;
         	    fieldLabel[i] = "HR";
             	fieldFormat[i] = "0decimal";
-
 			}
 		//!einde invullen field metrics
 		
@@ -405,7 +405,7 @@ class DatarunpremiumView extends Ui.DataField {
 		fieldvalue = (metric[counter]==38) ? Powerzone : fieldvalue; 
 		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
         if ( fieldformat.equals("0decimal" ) == true ) {
-        	fieldvalue = Math.round(fieldvalue);
+        	fieldvalue = fieldvalue.format("%.0f");        	
         } else if ( fieldformat.equals("1decimal" ) == true ) {
             Temp = Math.round(fieldvalue*10)/10;
         	fieldvalue = Temp.format("%.1f");
