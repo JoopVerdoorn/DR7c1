@@ -230,10 +230,6 @@ class ExtramemView extends DatarunpremiumView {
 	            CFMValue = CurrentEfficiencyFactor;
     	        CFMLabel = "Cur EF";
         	    CFMFormat = "2decimal";
-        	} else if (uClockFieldMetric == 38) {
-    	        CFMValue =  (info.currentPower != null) ? info.currentPower : 0;     	        
-        	    CFMLabel = "P zone";
-            	CFMFormat = "0decimal";
 	        } else if (uClockFieldMetric == 17) {
 	            CFMValue = Averagespeedinmpersec;
     	        CFMLabel = "Pc ..sec";

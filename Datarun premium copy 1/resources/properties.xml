@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.53</property>
+    <property id="pAppversion" type="string">1.55e</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -36,8 +36,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">1.53</string>
-    <string id="lDummysetting4version">Version 1.53 of Datarun premium (dummy setting)</string>
+    <string id="AppVersion">1.55e</string>
+    <string id="lDummysetting4version">Version 1.55e of Datarun premium (dummy setting)</string>
     <string id="lTimerDisplay">Timer field</string>
     <string id="lTimerTimer">Timer</string>
     <string id="lTimerLap">Current lap time</string>
@@ -608,25 +608,11 @@
         <listEntry value="51">@Strings.lAltitude</listEntry>
 
         
-        <listEntry value="20">@Strings.lSPower</listEntry>
-        <listEntry value="38">@Strings.lSPowerzone</listEntry>
-        <listEntry value="21">@Strings.lAsecPower</listEntry>
-        <listEntry value="37">@Strings.lPowper300km</listEntry>
-        <listEntry value="22">@Strings.lLPower</listEntry>
-        <listEntry value="23">@Strings.lLLPower</listEntry>
-        <listEntry value="24">@Strings.lAPower</listEntry>
         <listEntry value="31">@Strings.lCEFactor</listEntry>
-        <listEntry value="25">@Strings.lLEIndex</listEntry>
-        <listEntry value="26">@Strings.lLLEIndex</listEntry>
-        <listEntry value="27">@Strings.lAEIndex</listEntry>
         <listEntry value="32">@Strings.lAEFactor</listEntry>
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
-        <listEntry value="36">@Strings.lCP2HRratio</listEntry>
-        <listEntry value="33">@Strings.lLP2HRratio</listEntry>
-        <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
-        <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
 
       </settingConfig>
