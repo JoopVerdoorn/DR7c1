@@ -1,7 +1,9 @@
 using Toybox.Application as App;
 
 class CiqView extends DatarunpremiumView {  
-
+	hidden var mETA							= 0;
+	hidden var uETAfromLap 					= true;
+	
     function initialize() {
         DatarunpremiumView.initialize();
     }

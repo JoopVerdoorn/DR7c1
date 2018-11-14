@@ -138,7 +138,8 @@ class DatarunpremiumView extends Ui.DataField {
         if (System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE) {
             unitD = 1609.344;
         }
-
+		uRacedistance = (unitD/1000)*uRacedistance;
+		
 		//! Setting ID's for licensing and testing license
 		ID0 = watchType.substring(5, 9);
 		ID0 = 511+ID0.toNumber();
@@ -406,9 +407,6 @@ class DatarunpremiumView extends Ui.DataField {
 		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = fieldvalue.format("%.0f");        	
-        } else if ( fieldformat.equals("1decimal" ) == true ) {
-            Temp = Math.round(fieldvalue*10)/10;
-        	fieldvalue = Temp.format("%.1f");
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";

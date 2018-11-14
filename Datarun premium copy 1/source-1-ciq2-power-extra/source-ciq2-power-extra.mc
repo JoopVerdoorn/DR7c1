@@ -1,8 +1,5 @@
 class CiqView extends ExtramemView {  
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
-	hidden var mETA							= 0;
-	hidden var uETAfromLap 					= true;
-    hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
 	var counterPower 						= 0;
 	var rollingPwrValue 					= new [303];
 	var totalRPw 							= 0;
@@ -17,12 +14,16 @@ class CiqView extends ExtramemView {
     var mrealElevationLoss 					= 0;
     var mrealElevationDiff 					= 0;
 	var uBlackBackground 					= false;    
-
+	hidden var mETA							= 0;
+	hidden var uETAfromLap 					= true;
+	
     function initialize() {
         ExtramemView.initialize();
 		var mApp 		 = Application.getApp();
 		rolavPowmaxsecs	 = mApp.getProperty("prolavPowmaxsecs");	
 		uPowerZones		 = mApp.getProperty("pPowerZones");	
+		PalPowerzones 	= mApp.getProperty("p10Powerzones");
+		uPower10Zones		 = mApp.getProperty("pPPPowerZones");
     }
 
     //! Calculations we need to do every second even when the data field is not visible
@@ -85,23 +86,6 @@ class CiqView extends ExtramemView {
 			LastLapPower2HRRatio 		= (0.00001 + LastLapPower) / LastLapHeartrate;
 		}			
 
-        //! Calculate ETA
-        if (info.elapsedDistance != null && info.timerTime != null) {
-            if (uETAfromLap == true ) {
-            	if (mLastLapTimerTime > 0 && mLastLapElapsedDistance > 0 && mLaps > 1) {
-            		if (uRacedistance > info.elapsedDistance) {
-            			mETA = info.timerTime/1000 + (uRacedistance - info.elapsedDistance)/ mLastLapSpeed;
-            		} else {
-            			mETA = 0;
-            		}
-            	}
-            } else {
-            	if (info.elapsedDistance > 5) {
-            		mETA = uRacedistance / (1000*info.elapsedDistance/info.timerTime);
-            	}
-            }
-        }
-
 		//! Calculation of rolling average of power 
 		var zeroValueSecs = 0;
 		if (counterPower < 1) {
@@ -136,29 +120,14 @@ class CiqView extends ExtramemView {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
         	    fieldLabel[i] = "P zone";
             	fieldFormat[i] = "0decimal";
-			} else if (metric[i] == 14) {
-    	        fieldValue[i] = Math.round(mETA).toNumber();
-        	    fieldLabel[i] = "ETA";
-            	fieldFormat[i] = "time";           	
-	        } else if (metric[i] == 15) {
-        	    fieldLabel[i] = "Deviation";
-            	fieldFormat[i] = "time";
-	        	if ( mLaps == 1 ) {
-    	    		fieldValue[i] = 0;
-        		} else {
-        			fieldValue[i] = Math.round(mRacetime - mETA).toNumber() ;
-	        	}
-    	    	if (fieldValue[i] < 0) {
-        			fieldValue[i] = - fieldValue[i];
-        		}         	
-	        } else if (metric[i] == 17) {
+			} else if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";            	
 			} else if (metric[i] == 55) {   
             	fieldValue[i] = (info.currentSpeed != null or info.currentSpeed!=0) ? 100/info.currentSpeed : 0;
             	fieldLabel[i] = "s/100m";
-        	    fieldFormat[i] = "1decimal";
+        	    fieldFormat[i] = "2decimal";
         	} else if (metric[i] == 25) {
     	        fieldValue[i] = LapEfficiencyIndex;
         	    fieldLabel[i] = "Lap EI";

@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.55e</property>
+    <property id="pAppversion" type="string">1.55f</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -27,6 +27,9 @@
     <property id="prolavPowmaxsecs" type="number">30</property>
     <property id="pCCnumber" type="number">9999999</property>
     <property id="pClockFieldMetric" type="number">38</property>
+    <property id="p10Powerzones" type="boolean">false</property>
+    <property id="pPPPowerZones" type="string">180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
+    <property id="pClockFieldMetric" type="number">46</property>
   </properties>
 
 	
@@ -36,8 +39,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">1.55e</string>
-    <string id="lDummysetting4version">Version 1.55e of Datarun premium (dummy setting)</string>
+    <string id="AppVersion">1.55f</string>
+    <string id="lDummysetting4version">Version 1.55f of Datarun premium (dummy setting)</string>
     <string id="lTimerDisplay">Timer field</string>
     <string id="lTimerTimer">Timer</string>
     <string id="lTimerLap">Current lap time</string>
@@ -56,19 +59,19 @@
     <string id="lBottomLeftMetric">Bottom left field</string>
     <string id="lBottomRightMetric">Bottom right field</string>
     <string id="lClockFieldMetric">Metric in upper clock/lap field</string>
-    <string id="lETAfromLap">Calculation of ETA based on elapsed time of last lap, instead of total average speed (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lETAfromLap">Calculation of ETA based on elapsed time of last lap, instead of total average speed (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lCurrentPace">Current pace</string>
     <string id="lAvgPace">Overall average pace</string>
     <string id="lLapPace">Current lap pace</string>
     <string id="lLastLapPace">Last lap pace</string>
     <string id="lAltitude">Altitude</string>
     <string id="lTEffect">Aerobic training effect (only for FR645, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
-    <string id="lETA">Estimated time of arrival (only for FR645(m), Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
-    <string id="lETAfrompace">Estimated finished time based on average or last lap pace (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
-	<string id="lETAdeviation">Deviation from required finish in hours, minutes and seconds (only for FR645(m), Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lETA">Estimated time of arrival (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lETAfrompace">Estimated finished time based on average or last lap pace (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+	<string id="lETAdeviation">Deviation from required finish in hours, minutes and seconds (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lETArequiredpace">Required pace to meet required finish time</string>
-    <string id="lElevationGain">Elevation gain (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
-    <string id="lElevationLoss">Elevation loss (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lElevationGain">Elevation gain (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lElevationLoss">Elevation loss (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lRoundedPace">Show current pace as Rounded Pace</string>
     <string id="lMaxColoringPace">Use 5 colors for coloring of pace field in middle row, instead of 3 colors</string>
     <string id="lColoringPaceFromAver">Use average pace for coloring of the pace field in middle row, instead of pace based on desired finish time</string>
@@ -123,6 +126,8 @@
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
     <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="l10Powerzones">Use 10 power zones  instead of 5 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lCEFactor">Current efficiency Index (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lCEIndex">Current lap efficiency factor (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lCP2HRratio">Current power to heartrate ratio (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
@@ -157,7 +162,13 @@
     <setting propertyKey="@Properties.pETAfromLap" title="@Strings.lETAfromLap">
       <settingConfig type="boolean" required="true" />
     </setting>
+    <setting propertyKey="@Properties.p10Powerzones" title="@Strings.l10Powerzones">
+      <settingConfig type="boolean" required="true" />
+    </setting>    
     <setting propertyKey="@Properties.pPowerZones" title="@Strings.lPowerZones">
+      <settingConfig type="alphaNumeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pPPPowerZones" title="@Strings.lPPPowerZones">
       <settingConfig type="alphaNumeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pRequiredPower" title="@Strings.lRequiredPower">
@@ -223,7 +234,9 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-        
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+                
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
@@ -280,7 +293,9 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-        
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+                
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
@@ -333,7 +348,8 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
         
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -386,6 +402,8 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
 
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -438,6 +456,8 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
         
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
@@ -497,7 +517,9 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-        
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+                
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
@@ -555,7 +577,9 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-        
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+                
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
@@ -606,7 +630,8 @@
         <listEntry value="49">@Strings.lAveraHeartrate</listEntry>
         <listEntry value="50">@Strings.lCadence</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
-
+        <listEntry value="52">@Strings.lElevationGain</listEntry>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
         
         <listEntry value="31">@Strings.lCEFactor</listEntry>
         <listEntry value="32">@Strings.lAEFactor</listEntry>

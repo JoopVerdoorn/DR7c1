@@ -1,5 +1,8 @@
 class ExtramemView extends DatarunpremiumView {   
 	hidden var uHrZones   			        = [ 93, 111, 130, 148, 167, 185 ];	
+	hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
+	hidden var uPower10Zones				= "180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480";
+	hidden var PalPowerzones = false;
 	var mZone 								= [1, 2, 3, 4, 5, 6, 7, 8];
 	var uBlackBackground 					= false;    	
 	var counterPace 							= 0;
@@ -8,7 +11,7 @@ class ExtramemView extends DatarunpremiumView {
 	var rolavPacmaxsecs = 30;
 	var Averagespeedinmpersec = 0;
 	var uClockFieldMetric = 38; //! Powerzone is default
-
+	
     function initialize() {
         DatarunpremiumView.initialize();
 		var mApp 		 = Application.getApp();
@@ -69,11 +72,51 @@ class ExtramemView extends DatarunpremiumView {
 		var LapEfficiencyFactor   		= (LapHeartrate != 0) ? mLapSpeed*60/LapHeartrate : 0;
 		var LastLapEfficiencyFactor   	= (LastLapHeartrate != 0) ? mLastLapSpeed*60/LastLapHeartrate : 0;
 
+		//! Determine required finish time and calculate required pace 	
+        var mRacehour = uRacetime.substring(0, 2);
+        var mRacemin = uRacetime.substring(3, 5);
+        var mRacesec = uRacetime.substring(6, 8);
+        mRacehour = mRacehour.toNumber();
+        mRacemin = mRacemin.toNumber();
+        mRacesec = mRacesec.toNumber();
+        mRacetime = mRacehour*3600 + mRacemin*60 + mRacesec;
+		
+        //! Calculate ETA
+        if (info.elapsedDistance != null && info.timerTime != null) {
+            if (uETAfromLap == true ) {
+            	if (mLastLapTimerTime > 0 && mLastLapElapsedDistance > 0 && mLaps > 1) {
+            		if (uRacedistance > info.elapsedDistance) {
+            			mETA = info.timerTime/1000 + (uRacedistance - info.elapsedDistance)/ mLastLapSpeed;
+            		} else {
+            			mETA = 0;
+            		}
+            	}
+            } else {
+            	if (info.elapsedDistance > 5) {
+            		mETA = uRacedistance / (1000*info.elapsedDistance/info.timerTime);
+            	}
+            }
+        }
 
 
 		var i = 0; 
 	    for (i = 1; i < 8; ++i) {
-	        if (metric[i] == 17) {
+	        if (metric[i] == 14) {
+    	        fieldValue[i] = Math.round(mETA).toNumber();
+        	    fieldLabel[i] = "ETA";
+            	fieldFormat[i] = "time";               	        	
+            } else if (metric[i] == 15) {
+        	    fieldLabel[i] = "Deviation";
+            	fieldFormat[i] = "time";
+	        	if ( mLaps == 1 ) {
+    	    		fieldValue[i] = 0;
+        		} else {
+        			fieldValue[i] = Math.round(mRacetime - mETA).toNumber() ;
+	        	}
+    	    	if (fieldValue[i] < 0) {
+        			fieldValue[i] = - fieldValue[i];
+        		}            	
+			} else if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
         	    fieldFormat[i] = "pace";  
@@ -213,7 +256,7 @@ class ExtramemView extends DatarunpremiumView {
 			} else if (uClockFieldMetric == 55) {   
             	CFMValue = (info.currentSpeed != null or info.currentSpeed!=0) ? 100/info.currentSpeed : 0;
             	CFMLabel = "s/100m";
-        	    CFMFormat = "1decimal";
+        	    CFMFormat = "2decimal";
 	        } else if (uClockFieldMetric == 28) {
     	        CFMValue = LapEfficiencyFactor;
         	    CFMLabel = "Lap EF";
@@ -300,9 +343,6 @@ class ExtramemView extends DatarunpremiumView {
 			CFMValue = (uClockFieldMetric==46) ? HRzone : CFMValue;
 			if ( CFMFormat.equals("0decimal" ) == true ) {
         		CFMValue = Math.round(CFMValue);
-	        } else if ( CFMFormat.equals("1decimal" ) == true ) {
-    	        Temp = Math.round(CFMValue*10)/10;
-        		CFMValue = Temp.format("%.1f");
 	        } else if ( CFMFormat.equals("2decimal" ) == true ) {
     	        Temp = Math.round(CFMValue*100)/100;
         	    var fString = "%.2f";
@@ -416,6 +456,75 @@ class ExtramemView extends DatarunpremiumView {
 			mfillColour = mColourBackGround;        
             mZone[counter] = 0;
 		}		
+
+		if ( PalPowerzones == true) {
+		  if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {  //! Power=20, Powerzone=38, Pwr 5s=21, L Power=22, L-1 Pwr=23, A Power=24		
+        	mZ1under = uPower10Zones.substring(0, 3);
+        	mZ2under = uPower10Zones.substring(7, 10);
+        	mZ3under = uPower10Zones.substring(14, 17);
+        	mZ4under = uPower10Zones.substring(21, 24);
+        	mZ5under = uPower10Zones.substring(28, 31);
+        	var mZ6under = uPower10Zones.substring(35, 38);
+        	var mZ7under = uPower10Zones.substring(42, 45);
+        	var mZ8under = uPower10Zones.substring(49, 52);
+        	var mZ9under = uPower10Zones.substring(56, 59);
+			var mZ10under = uPower10Zones.substring(63, 66);
+        	var mZ10upper = uPower10Zones.substring(71, 74);
+             
+        	mZ1under = mZ1under.toNumber();
+        	mZ2under = mZ2under.toNumber();
+	        mZ3under = mZ3under.toNumber();
+     	   	mZ4under = mZ4under.toNumber();        
+        	mZ5under = mZ5under.toNumber();
+	        mZ6under = mZ6under.toNumber();
+    	    mZ7under = mZ7under.toNumber();
+        	mZ8under = mZ8under.toNumber();
+	        mZ9under = mZ9under.toNumber();
+    	    mZ10under = mZ10under.toNumber();
+        	mZ10upper = mZ10upper.toNumber(); 
+
+		  if (info.currentPower != null) {
+                if (testvalue >= mZ10upper) {
+                    mfillColour = Graphics.COLOR_BLACK;        //! (aboveZ10)
+                    mZone[counter] = 11;
+                } else if (testvalue >= mZ10under) {
+                    mfillColour = Graphics.COLOR_PURPLE;    	//! (Z10)
+                    mZone[counter] = 10;
+                } else if (testvalue >= mZ9under) {
+                    mfillColour = Graphics.COLOR_PURPLE;    	//! (Z9)
+                    mZone[counter] = 9;
+                } else if (testvalue >= mZ8under) {
+                    mfillColour = Graphics.COLOR_PINK;    	//! (Z8)
+                    mZone[counter] = 8;
+                } else if (testvalue >= mZ7under) {
+                    mfillColour = Graphics.COLOR_DK_RED;    	//! (Z7)
+                    mZone[counter] = 7;
+                } else if (testvalue >= mZ6under) {
+                    mfillColour = Graphics.COLOR_RED;    	//! (Z6)
+                    mZone[counter] = 6;
+                } else if (testvalue >= mZ5under) {
+                    mfillColour = Graphics.COLOR_ORANGE;    	//! (Z5)
+                    mZone[counter] = 5;
+                } else if (testvalue >= mZ4under) {
+                    mfillColour = Graphics.COLOR_DK_GREEN;    	//! (Z4)
+                    mZone[counter] = 4;
+                } else if (testvalue >= mZ3under) {
+                    mfillColour = Graphics.COLOR_GREEN;        //! (Z3)
+                    mZone[counter] = 3;
+                } else if (testvalue >= mZ2under) {
+                    mfillColour = Graphics.COLOR_BLUE;        //! (Z2)
+                    mZone[counter] = 2;
+                } else if (testvalue >= mZ1under) {
+                    mfillColour = Graphics.COLOR_DK_GRAY;        //! (Z1)
+                    mZone[counter] = 1;
+                } else {
+                    mfillColour = Graphics.COLOR_LT_GRAY;        //! (Z0)
+                    mZone[counter] = 0;
+                }
+		 	  }
+		   }
+		}
+
 		if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {
 			Powerzone = mZone[counter];
 		}
