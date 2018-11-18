@@ -16,6 +16,7 @@ class CiqView extends ExtramemView {
 	var uBlackBackground 					= false;    
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
+	hidden var FilteredCurPower				= 0;
 	
     function initialize() {
         ExtramemView.initialize();
@@ -95,6 +96,8 @@ class CiqView extends ExtramemView {
 		}
 		counterPower = counterPower + 1;
 		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
+		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > 2000) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
+		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			rollingPwrValue [i] = rollingPwrValue [i+1];
 		}
@@ -120,6 +123,10 @@ class CiqView extends ExtramemView {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
         	    fieldLabel[i] = "P zone";
             	fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 56) {
+	            fieldValue[i] = FilteredCurPower;
+    	        fieldLabel[i] = "Filt Pwr";
+        	    fieldFormat[i] = "0decimal";            	
 			} else if (metric[i] == 17) {
 	            fieldValue[i] = Averagespeedinmpersec;
     	        fieldLabel[i] = "Pc ..sec";
