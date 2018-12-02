@@ -1,12 +1,4 @@
 class CiqView extends ExtramemView {	
-    var mlastaltitude 						= 0;
-    var aaltitude 							= 0;
-	var mElevationGain 						= 0;
-    var mElevationLoss 						= 0;
-    var mElevationDiff 						= 0;
-    var mrealElevationGain 					= 0;
-    var mrealElevationLoss 					= 0;
-    var mrealElevationDiff 					= 0;    
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
 	
@@ -26,20 +18,7 @@ class CiqView extends ExtramemView {
 			//!Calculate lapheartrate
             mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
            	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
-        }
-        //! Calculate elevation differences and rounding altitude
-        if (info.altitude != null) {        
-          aaltitude = Math.round(info.altitude).toNumber();
-          mrealElevationDiff = aaltitude - mlastaltitude;
-          if (mrealElevationDiff > 0 ) {
-          	mrealElevationGain = mrealElevationDiff + mrealElevationGain;
-          } else {
-          	mrealElevationLoss =  mrealElevationLoss - mrealElevationDiff;
-          }  
-          mlastaltitude = aaltitude;
-          mElevationLoss = Math.round(mrealElevationLoss).toNumber();
-          mElevationGain = Math.round(mrealElevationGain).toNumber();
-        }  
+        } 
 	}
 
 	function onUpdate(dc) {

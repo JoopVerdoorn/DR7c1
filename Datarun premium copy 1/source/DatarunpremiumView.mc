@@ -364,7 +364,7 @@ class DatarunpremiumView extends Ui.DataField {
         	    fieldFormat[i] = "0decimal";
 			} else if (metric[i] == 51) {
 		  		fieldValue[i] = (info.altitude != null) ? info.altitude : 0;
-		  		fieldValue[i] = (unitD == 1609.344) ? info.altitude*3.2808 : info.altitude; 
+		  		fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i]; 
 		       	fieldLabel[i] = "Altitude";
 		       	fieldFormat[i] = "0decimal";        		
         	} else if (metric[i] == 45) {

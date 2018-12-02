@@ -145,11 +145,13 @@ class ExtramemView extends DatarunpremiumView {
         	    fieldLabel[i] = "T effect";
             	fieldFormat[i] = "2decimal";           	
 			} else if (metric[i] == 52) {
-           		fieldValue[i] = mElevationGain;
+           		fieldValue[i] = (info.totalAscent != null) ? info.totalAscent : 0;
+            	fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i];
             	fieldLabel[i] = "EL gain";
             	fieldFormat[i] = "0decimal";
         	}  else if (metric[i] == 53) {
-           		fieldValue[i] = mElevationLoss;
+           		fieldValue[i] = (info.totalDescent != null) ? info.totalDescent : 0;
+           		fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i];
             	fieldLabel[i] = "EL loss";
             	fieldFormat[i] = "0decimal";           	
 			} 
@@ -282,11 +284,13 @@ class ExtramemView extends DatarunpremiumView {
         	    CFMLabel = "T effect";
             	CFMFormat = "2decimal";           	
 			} else if (uClockFieldMetric == 52) {
-           		CFMValue = mElevationGain;
+           		CFMValue = (info.totalAscent != null) ? info.totalAscent : 0;
+            	CFMValue = (unitD == 1609.344) ? CFMValue*3.2808 : CFMValue;
             	CFMLabel = "EL gain";
             	CFMFormat = "0decimal";
         	}  else if (uClockFieldMetric == 53) {
-           		fieldValue[i] = mElevationLoss;
+           		CFMValue = (info.totalDescent != null) ? info.totalDescent : 0;
+           		CFMValue = (unitD == 1609.344) ? CFMValue*3.2808 : CFMValue; 
             	CFMLabel = "EL loss";
             	CFMFormat = "0decimal";           	
 			} 
