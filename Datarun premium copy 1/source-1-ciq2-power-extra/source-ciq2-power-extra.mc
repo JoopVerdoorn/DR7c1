@@ -1,3 +1,4 @@
+using Toybox.Math;
 class CiqView extends ExtramemView {  
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
 	var counterPower 						= 0;
@@ -75,6 +76,7 @@ class CiqView extends ExtramemView {
 		}
 		counterPower = counterPower + 1;
 		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
+//!temporary solution for power spikes > 2000 Wat 		
 		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > 2000) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
 		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
@@ -93,6 +95,14 @@ class CiqView extends ExtramemView {
 		}
 		totalRPw = 0;       
 
+		//!Calculate normalized power
+		var sumNormalizedPow = 0;
+		if (jTimertime > 30) {
+			for (var i = 1; i < 31; ++i) {
+				sumNormalizedPow = sumNormalizedPow + Math.pow(rollingPwrValue [rolavPowmaxsecs+2-i],4);
+			}
+		}
+		var mNormalizedPow = Math.round(Math.pow(sumNormalizedPow/30,0.25));		
 
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
 
@@ -150,7 +160,11 @@ class CiqView extends ExtramemView {
 	            fieldValue[i] = Averagepowerpersec;
     	        fieldLabel[i] = "Pw ..sec";
         	    fieldFormat[i] = "power";
-        	}
+			} else if (metric[i] == 57) {
+	            fieldValue[i] = mNormalizedPow;
+    	        fieldLabel[i] = "N Power";
+        	    fieldFormat[i] = "0decimal";
+        	} 
         	//!einde invullen field metrics
 		}
 		//! Conditions for showing the demoscreen       

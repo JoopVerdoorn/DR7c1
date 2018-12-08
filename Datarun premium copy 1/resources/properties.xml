@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.56c</property>
+    <property id="pAppversion" type="string">1.56d</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -39,8 +39,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">1.56c</string>
-    <string id="lDummysetting4version">Version 1.56c of Datarun premium (dummy setting)</string>
+    <string id="AppVersion">1.56d</string>
+    <string id="lDummysetting4version">Version 1.56d of Datarun premium (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -132,6 +132,7 @@
     <string id="lPowper300km">Power averaged over the last .. seconds</string>
     <string id="lrolavPowmaxsecs">Power averaged over the last ... seconds (max is 300 seconds, only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lrolavPowmaxsecsError">This needs to be a number from 2 too 300</string>
+    <string id="lNPower">Normalized power (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lAPower">Average running power</string>
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
@@ -253,6 +254,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -324,6 +326,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -388,6 +391,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -452,6 +456,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -516,6 +521,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -588,6 +594,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
@@ -658,6 +665,7 @@
         <listEntry value="996">@Strings.lSPowerMenu</listEntry>
         <listEntry value="20">@Strings.lSPower</listEntry>
         <listEntry value="56">@Strings.lFilteredCurPower</listEntry>
+        <listEntry value="57">@Strings.lNPower</listEntry>
         <listEntry value="38">@Strings.lSPowerzone</listEntry>
         <listEntry value="21">@Strings.lAsecPower</listEntry>
         <listEntry value="37">@Strings.lPowper300km</listEntry>
