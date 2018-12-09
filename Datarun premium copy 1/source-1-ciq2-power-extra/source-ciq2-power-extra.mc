@@ -10,6 +10,9 @@ class CiqView extends ExtramemView {
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
 	hidden var FilteredCurPower				= 0;
+	//!var sumNormalizedPow 					= 0;
+	var sum4thPowers						= 0;
+	var fourthPowercounter 					= 0;
 	
     function initialize() {
         ExtramemView.initialize();
@@ -96,13 +99,19 @@ class CiqView extends ExtramemView {
 		totalRPw = 0;       
 
 		//!Calculate normalized power
-		var sumNormalizedPow = 0;
+		var mNormalizedPow = 0;
+		var rollingPwr30s = 0;
 		if (jTimertime > 30) {
 			for (var i = 1; i < 31; ++i) {
-				sumNormalizedPow = sumNormalizedPow + Math.pow(rollingPwrValue [rolavPowmaxsecs+2-i],4);
+				rollingPwr30s = rollingPwr30s + rollingPwrValue [rolavPowmaxsecs+2-i];
 			}
-		}
-		var mNormalizedPow = Math.round(Math.pow(sumNormalizedPow/30,0.25));		
+			rollingPwr30s = rollingPwr30s/30;
+			if (mTimerRunning == true) {
+				sum4thPowers = sum4thPowers + Math.pow(rollingPwr30s,4);
+				fourthPowercounter = fourthPowercounter + 1; 
+			}
+			mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));
+		}		
 
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
 
