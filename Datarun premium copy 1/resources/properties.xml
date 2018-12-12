@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.56e</property>
+    <property id="pAppversion" type="string">1.56f</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -30,6 +30,7 @@
     <property id="p10Powerzones" type="boolean">false</property>
     <property id="pPPPowerZones" type="string">180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</property>
     <property id="pClockFieldMetric" type="number">46</property>
+    <property id="pFTP" type="number">250</property>
   </properties>
 
 	
@@ -39,8 +40,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">1.56e</string>
-    <string id="lDummysetting4version">Version 1.56e of Datarun premium (dummy setting)</string>
+    <string id="AppVersion">1.56f</string>
+    <string id="lDummysetting4version">Version 1.56f of Datarun premium (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -103,7 +104,10 @@
     <string id="lHeartrateZone">Heartrate zone (only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lAveraHeartrate">Average heartrate</string>
 	<string id="lLapHeartrate">Current lap heartrate</string>
-	<string id="lLLHeartrate">Last lap heartrate</string>    
+	<string id="lLLHeartrate">Last lap heartrate</string>   
+	<string id="lFTP">Functional treshold power, needed for Intensity factor and Training stress score (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+	<string id="lIntensityFactor">Intensity Factor (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+	<string id="lTTS">Training Stress Score (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lRequiredPower">Boundaries for warning signal, a format required like (227:284)</string> 
     <string id="lWarningFreq">Frequency for the warning signal for operating out of powerzone</string>
     <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string>   
@@ -181,6 +185,9 @@
     </setting>
     <setting propertyKey="@Properties.pPPPowerZones" title="@Strings.lPPPowerZones">
       <settingConfig type="alphaNumeric"  required="true"/>
+    </setting>
+    <setting propertyKey="@Properties.pFTP" title="@Strings.lFTP">
+      <settingConfig type="numeric"  required="true"/>
     </setting>
     <setting propertyKey="@Properties.pRequiredPower" title="@Strings.lRequiredPower">
       <settingConfig type="alphaNumeric"  required="true"/>
@@ -276,6 +283,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -348,6 +357,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -413,6 +424,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -478,6 +491,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -543,6 +558,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -616,6 +633,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -687,6 +706,8 @@
         <listEntry value="34">@Strings.lLLP2HRratio</listEntry>
         <listEntry value="35">@Strings.lAP2HRratio</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
@@ -730,6 +751,8 @@
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
         <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="58">@Strings.lIntensityFactor</listEntry>
+        <listEntry value="59">@Strings.lTTS</listEntry>
 
       </settingConfig>
     </setting>

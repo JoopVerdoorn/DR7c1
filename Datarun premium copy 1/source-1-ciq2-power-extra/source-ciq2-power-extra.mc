@@ -6,13 +6,16 @@ class CiqView extends ExtramemView {
 	var totalRPw 							= 0;
 	var rolavPowmaxsecs 					= 30;
 	var Averagepowerpersec 					= 0;
-	var uBlackBackground 					= false;    
+	var uBlackBackground 					= false;
+	var uFTP								= 250;    
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
 	hidden var FilteredCurPower				= 0;
 	//!var sumNormalizedPow 					= 0;
 	var sum4thPowers						= 0;
 	var fourthPowercounter 					= 0;
+	var mIntensityFactor					= 0;
+	var mTTS								= 0;
 	
     function initialize() {
         ExtramemView.initialize();
@@ -21,6 +24,10 @@ class CiqView extends ExtramemView {
 		uPowerZones		 = mApp.getProperty("pPowerZones");	
 		PalPowerzones 	= mApp.getProperty("p10Powerzones");
 		uPower10Zones		 = mApp.getProperty("pPPPowerZones");
+		uFTP		 = mApp.getProperty("pFTP");
+		if (metric[1] == 57 or metric[2] == 57 or metric[3] == 57 or metric[4] == 57 or metric[5] == 57 or metric[6] == 57 or metric[7] == 57) {
+			rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
+		}			
     }
 
     //! Calculations we need to do every second even when the data field is not visible
@@ -87,6 +94,7 @@ class CiqView extends ExtramemView {
 		}
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			totalRPw = rollingPwrValue[i] + totalRPw;
+		
 			if (mPowerTime < rolavPowmaxsecs) {
 				zeroValueSecs = (rollingPwrValue[i] != 0) ? zeroValueSecs : zeroValueSecs + 1;
 			}
@@ -114,6 +122,10 @@ class CiqView extends ExtramemView {
 		}		
 
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+
+		//! Calculate IF and TTS
+		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
+		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
 
 		var i = 0; 
 	    for (i = 1; i < 8; ++i) {
@@ -172,6 +184,14 @@ class CiqView extends ExtramemView {
 			} else if (metric[i] == 57) {
 	            fieldValue[i] = mNormalizedPow;
     	        fieldLabel[i] = "N Power";
+        	    fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 58) {
+	            fieldValue[i] = mIntensityFactor;
+    	        fieldLabel[i] = "IF";
+        	    fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 59) {
+	            fieldValue[i] = mTTS;
+    	        fieldLabel[i] = "TTS";
         	    fieldFormat[i] = "0decimal";
         	} 
         	//!einde invullen field metrics
