@@ -54,7 +54,7 @@ class CiqView extends ExtramemView {
             mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
 			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;
 			
-			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow((info.currentPower/uCP),3.5) : RSS; 			             
+			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow(((info.currentPower+0.001)/uCP),3.5) : RSS; 			             
         }
 	}
 
