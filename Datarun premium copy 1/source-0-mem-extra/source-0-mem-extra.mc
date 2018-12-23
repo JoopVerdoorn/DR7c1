@@ -154,6 +154,18 @@ class ExtramemView extends DatarunpremiumView {
            		fieldValue[i] = (unitD == 1609.344) ? fieldValue[i]*3.2808 : fieldValue[i];
             	fieldLabel[i] = "EL loss";
             	fieldFormat[i] = "0decimal";           	
+        	}  else if (metric[i] == 61) {
+           		fieldValue[i] = (info.currentCadence != null) ? info.currentCadence/2 : 0;
+            	fieldLabel[i] = "RCadence";
+            	fieldFormat[i] = "0decimal";           	
+        	}  else if (metric[i] == 62) {
+           		fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
+            	fieldLabel[i] = "Spd 3s";
+            	fieldFormat[i] = "2decimal";           	
+        	}  else if (metric[i] == 63) {
+           		fieldValue[i] = 3.6*Averagespeedinmpersec*1000/unitP ;
+            	fieldLabel[i] = "Spd ..s";
+            	fieldFormat[i] = "2decimal";           	
 			} 
 		}
 
@@ -293,7 +305,20 @@ class ExtramemView extends DatarunpremiumView {
            		CFMValue = (unitD == 1609.344) ? CFMValue*3.2808 : CFMValue; 
             	CFMLabel = "EL loss";
             	CFMFormat = "0decimal";           	
-			} 
+        	}  else if (uClockFieldMetric == 61) {
+           		CFMValue = (info.currentCadence != null) ? info.currentCadence/2 : 0;
+            	CFMLabel = "RCadence";
+            	CFMFormat = "0decimal";           	
+        	}  else if (uClockFieldMetric == 62) {
+           		CFMValue = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3)/3)*1000/unitP : 0;
+            	CFMLabel = "Spd 3s";
+            	CFMFormat = "2decimal";           	
+        	}  else if (uClockFieldMetric == 63) {
+           		CFMValue = 3.6*Averagespeedinmpersec*1000/unitP ;
+            	CFMLabel = "Spd ..s";
+            	CFMFormat = "2decimal";           	
+			}
+			 
 
 		//! Conditions for showing the demoscreen       
         if (uShowDemo == false) {
@@ -377,8 +402,6 @@ class ExtramemView extends DatarunpremiumView {
 		}
 		
 		if (jTimertime == 0) {
-			dc.setColor(mColourBackGround, Graphics.COLOR_TRANSPARENT);
-        	dc.fillRectangle (60, 120, 120, 80);
         	var myTime = Toybox.System.getClockTime(); 
 	    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
 	    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);

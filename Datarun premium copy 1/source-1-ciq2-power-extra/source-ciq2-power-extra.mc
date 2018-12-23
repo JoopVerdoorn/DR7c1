@@ -8,6 +8,8 @@ class CiqView extends ExtramemView {
 	var Averagepowerpersec 					= 0;
 	var uBlackBackground 					= false;
 	var uFTP								= 250;    
+	var uCP									= 250;
+	var RSS									= 0;
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
 	hidden var FilteredCurPower				= 0;
@@ -16,15 +18,21 @@ class CiqView extends ExtramemView {
 	var fourthPowercounter 					= 0;
 	var mIntensityFactor					= 0;
 	var mTTS								= 0;
+	var uWorkoutzones						= "00@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170";
+	var mWorkoutTime						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	var mWorkoutLzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	var mWorkoutHzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 	
     function initialize() {
         ExtramemView.initialize();
 		var mApp 		 = Application.getApp();
 		rolavPowmaxsecs	 = mApp.getProperty("prolavPowmaxsecs");	
 		uPowerZones		 = mApp.getProperty("pPowerZones");	
-		PalPowerzones 	= mApp.getProperty("p10Powerzones");
-		uPower10Zones		 = mApp.getProperty("pPPPowerZones");
-		uFTP		 = mApp.getProperty("pFTP");
+		PalPowerzones 	 = mApp.getProperty("p10Powerzones");
+		uPower10Zones	 = mApp.getProperty("pPPPowerZones");
+		uFTP		 	 = mApp.getProperty("pFTP");
+		uCP		 	 	 = mApp.getProperty("pCP");
+		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
 		if (metric[1] == 57 or metric[2] == 57 or metric[3] == 57 or metric[4] == 57 or metric[5] == 57 or metric[6] == 57 or metric[7] == 57) {
 			rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
 		}			
@@ -44,7 +52,9 @@ class CiqView extends ExtramemView {
            	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
             //!Calculate lappower
             mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
-			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;              
+			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;
+			
+			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow((info.currentPower/uCP),3.5) : RSS; 			             
         }
 	}
 
@@ -121,12 +131,50 @@ class CiqView extends ExtramemView {
 			mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));
 		}		
 
-		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
-
 		//! Calculate IF and TTS
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
 		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
 
+		//! Set up powerbased workout
+		mWorkoutTime[1]		= uWorkoutzones.substring(0, 2);
+		mWorkoutLzone[1]	= uWorkoutzones.substring(3, 6);
+		mWorkoutHzone[1]	= uWorkoutzones.substring(7, 10);
+		mWorkoutTime[2]		= uWorkoutzones.substring(11, 13);
+		mWorkoutLzone[2] 	= uWorkoutzones.substring(14, 17);
+		mWorkoutHzone[2] 	= uWorkoutzones.substring(18, 21);
+		mWorkoutTime[3]		= uWorkoutzones.substring(22, 24);
+		mWorkoutLzone[3] 	= uWorkoutzones.substring(25, 28);
+		mWorkoutHzone[3]	= uWorkoutzones.substring(29, 32);
+		mWorkoutTime[4]		= uWorkoutzones.substring(33, 35);
+		mWorkoutLzone[4] 	= uWorkoutzones.substring(36, 39);
+		mWorkoutHzone[4]	= uWorkoutzones.substring(40, 43);
+		mWorkoutTime[5]		= uWorkoutzones.substring(44, 46);
+		mWorkoutLzone[5] 	= uWorkoutzones.substring(47, 50);
+		mWorkoutHzone[5]	= uWorkoutzones.substring(51, 54);
+		mWorkoutTime[6]		= uWorkoutzones.substring(55, 57);
+		mWorkoutLzone[6] 	= uWorkoutzones.substring(58, 61);
+		mWorkoutHzone[6]	= uWorkoutzones.substring(62, 65);
+		mWorkoutTime[7]		= uWorkoutzones.substring(66, 68);
+		mWorkoutLzone[7] 	= uWorkoutzones.substring(69, 72);
+		mWorkoutHzone[7]	= uWorkoutzones.substring(73, 76);
+		mWorkoutTime[8]		= uWorkoutzones.substring(77, 79);
+		mWorkoutLzone[8] 	= uWorkoutzones.substring(80, 83);
+		mWorkoutHzone[8]	= uWorkoutzones.substring(84, 87);
+		mWorkoutTime[9]		= uWorkoutzones.substring(88, 90);
+		mWorkoutLzone[9] 	= uWorkoutzones.substring(91, 94);
+		mWorkoutHzone[9]	= uWorkoutzones.substring(95, 98);
+		mWorkoutTime[10]	= uWorkoutzones.substring(99, 101);
+		mWorkoutLzone[10] 	= uWorkoutzones.substring(102, 105);
+		mWorkoutHzone[10] 	= uWorkoutzones.substring(106, 109);		
+		
+		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+		if (mWorkoutTime[1].equals("00") == false ) {
+			if (jTimertime == 0) { 
+				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutTime[1] + " min " + " @ " + mWorkoutLzone[1] + " - " + mWorkoutHzone[1], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			}
+		}
+		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+		
 		var i = 0; 
 	    for (i = 1; i < 8; ++i) {
 	        if (metric[i] == 38) {
@@ -193,6 +241,10 @@ class CiqView extends ExtramemView {
 	            fieldValue[i] = mTTS;
     	        fieldLabel[i] = "TTS";
         	    fieldFormat[i] = "0decimal";
+			} else if (metric[i] == 60) {
+	            fieldValue[i] = RSS;
+    	        fieldLabel[i] = "RSS";
+        	    fieldFormat[i] = "0decimal";
         	} 
         	//!einde invullen field metrics
 		}
@@ -210,6 +262,94 @@ class CiqView extends ExtramemView {
 	   
 	}
 
+    function Formatting(dc,counter,fieldvalue,fieldformat,fieldlabel,CorString) {     
+        var originalFontcolor = mColourFont;
+        var Temp; 
+        var x = CorString.substring(0, 3);
+        var y = CorString.substring(4, 7);
+        var xms = CorString.substring(8, 11);
+        var xh = CorString.substring(12, 15);
+        var yh = CorString.substring(16, 19);
+        var xl = CorString.substring(20, 23);
+		var yl = CorString.substring(24, 27);                  
+        x = x.toNumber();
+        y = y.toNumber();
+        xms = xms.toNumber();
+        xh = xh.toNumber();        
+        yh = yh.toNumber();
+        xl = xl.toNumber();
+        yl = yl.toNumber();
+
+		fieldvalue = (metric[counter]==38) ? Powerzone : fieldvalue; 
+		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
+		
+        if ( fieldformat.equals("0decimal" ) == true ) {
+        	fieldvalue = fieldvalue.format("%.0f");        	
+        } else if ( fieldformat.equals("2decimal" ) == true ) {
+            Temp = Math.round(fieldvalue*100)/100;
+            var fString = "%.2f";
+         	if (Temp > 9.99999) {
+             	fString = "%.1f";
+            }           
+        	fieldvalue = Temp.format(fString);        	
+        } else if ( fieldformat.equals("pace" ) == true ) {
+        	Temp = (fieldvalue != 0 ) ? (unitP/fieldvalue).toLong() : 0;
+        	fieldvalue = (Temp / 60).format("%0d") + ":" + Math.round(Temp % 60).format("%02d");
+        } else if ( fieldformat.equals("power" ) == true ) {     
+        	fieldvalue = Math.round(fieldvalue);       	
+        	if (PowerWarning == 1) { 
+        		mColourFont = Graphics.COLOR_PURPLE;
+        	} else if (PowerWarning == 2) { 
+        		mColourFont = Graphics.COLOR_RED;
+        	} else if (PowerWarning == 0) { 
+        		mColourFont = originalFontcolor;
+        	}
+        } else if ( fieldformat.equals("timeshort" ) == true  ) {
+        	Temp = (fieldvalue != 0 ) ? (fieldvalue).toLong() : 0;
+        	fieldvalue = (Temp /60000 % 60).format("%02d") + ":" + (Temp /1000 % 60).format("%02d");
+        }
+
+		var hideText = true;
+    	if (mWorkoutTime[1].equals("00") == false ) {
+			if (jTimertime == 0) {
+				if (counter < 3 or counter > 5) { 
+					hideText = false;
+				}
+			} else {
+				hideText = false;
+			}
+		}
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+    	
+        if ( fieldformat.equals("time" ) == true ) {    
+	    	if ( counter == 1 or counter == 2 or counter == 6 or counter == 7 ) {  
+	    		var fTimerSecs = (fieldvalue % 60).format("%02d");
+        		var fTimer = (fieldvalue / 60).format("%d") + ":" + fTimerSecs;  //! Format time as m:ss
+	    		var xx = x;
+	    		//! (Re-)format time as h:mm(ss) if more than an hour
+	    		if (fieldvalue > 3599) {
+            		var fTimerHours = (fieldvalue / 3600).format("%d");
+            		xx = xms;
+            		if (hideText == false) {
+            			dc.drawText(xh, yh, Graphics.FONT_NUMBER_MILD, fTimerHours, Graphics.TEXT_JUSTIFY_LEFT|Graphics.TEXT_JUSTIFY_VCENTER);
+            		}
+            		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
+        		}
+        		if (hideText == false) {
+        			dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        		}	
+        	}
+        } else {
+        	if (hideText == false) {
+        		dc.drawText(x, y, Graphics.FONT_NUMBER_MEDIUM, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        	}
+        }        
+        if (hideText == false) {
+        	dc.drawText(xl, yl, Graphics.FONT_XTINY,  fieldlabel, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        }               
+        mColourFont = originalFontcolor;
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+    }
 
 	function hashfunction(string) {
     	var val = 0;
