@@ -173,7 +173,7 @@ class CiqView extends ExtramemView {
 				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutTime[1] + " min " + " @ " + mWorkoutLzone[1] + " - " + mWorkoutHzone[1], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
 		}
-		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		
 		var i = 0; 
 	    for (i = 1; i < 8; ++i) {
@@ -318,9 +318,11 @@ class CiqView extends ExtramemView {
 			} else {
 				hideText = false;
 			}
+		} else {
+				hideText = false;
 		}
+		
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-    	
         if ( fieldformat.equals("time" ) == true ) {    
 	    	if ( counter == 1 or counter == 2 or counter == 6 or counter == 7 ) {  
 	    		var fTimerSecs = (fieldvalue % 60).format("%02d");
