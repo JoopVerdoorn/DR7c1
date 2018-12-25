@@ -18,11 +18,18 @@ class CiqView extends ExtramemView {
 	var fourthPowercounter 					= 0;
 	var mIntensityFactor					= 0;
 	var mTTS								= 0;
-	var uWorkoutzones						= "00@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170;05@150-170";
-	var mWorkoutTime						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-	var mWorkoutLzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-	var mWorkoutHzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-	
+	var uWorkoutType						= 0;
+	var uWorkoutAzones						= "100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150";
+	var uWorkoutRzones						= "0300s100-190 ; 8x(0120s240-260 ; 0060s190-210) ; 0900s100-190";
+	var uWorkoutrepeats						= 8;
+	var repeats								= 8;
+	var uWorkoutzones						= "0300s100-190 ; 0800m240-260 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m320-340 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0300s100-190";
+	var mWorkoutAmount						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+	var mWorkoutType						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+	var mWorkoutLzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+	var mWorkoutHzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+	var i 									= 0;
+		
     function initialize() {
         ExtramemView.initialize();
 		var mApp 		 = Application.getApp();
@@ -32,6 +39,9 @@ class CiqView extends ExtramemView {
 		uPower10Zones	 = mApp.getProperty("pPPPowerZones");
 		uFTP		 	 = mApp.getProperty("pFTP");
 		uCP		 	 	 = mApp.getProperty("pCP");
+		uWorkoutType	 = mApp.getProperty("pWorkoutType");
+		uWorkoutAzones	 = mApp.getProperty("pWorkoutAzones");
+		uWorkoutRzones	 = mApp.getProperty("pWorkoutRzones");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
 		if (metric[1] == 57 or metric[2] == 57 or metric[3] == 57 or metric[4] == 57 or metric[5] == 57 or metric[6] == 57 or metric[7] == 57) {
 			rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
@@ -135,47 +145,60 @@ class CiqView extends ExtramemView {
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
 		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
 
-		//! Set up powerbased workout
-		mWorkoutTime[1]		= uWorkoutzones.substring(0, 2);
-		mWorkoutLzone[1]	= uWorkoutzones.substring(3, 6);
-		mWorkoutHzone[1]	= uWorkoutzones.substring(7, 10);
-		mWorkoutTime[2]		= uWorkoutzones.substring(11, 13);
-		mWorkoutLzone[2] 	= uWorkoutzones.substring(14, 17);
-		mWorkoutHzone[2] 	= uWorkoutzones.substring(18, 21);
-		mWorkoutTime[3]		= uWorkoutzones.substring(22, 24);
-		mWorkoutLzone[3] 	= uWorkoutzones.substring(25, 28);
-		mWorkoutHzone[3]	= uWorkoutzones.substring(29, 32);
-		mWorkoutTime[4]		= uWorkoutzones.substring(33, 35);
-		mWorkoutLzone[4] 	= uWorkoutzones.substring(36, 39);
-		mWorkoutHzone[4]	= uWorkoutzones.substring(40, 43);
-		mWorkoutTime[5]		= uWorkoutzones.substring(44, 46);
-		mWorkoutLzone[5] 	= uWorkoutzones.substring(47, 50);
-		mWorkoutHzone[5]	= uWorkoutzones.substring(51, 54);
-		mWorkoutTime[6]		= uWorkoutzones.substring(55, 57);
-		mWorkoutLzone[6] 	= uWorkoutzones.substring(58, 61);
-		mWorkoutHzone[6]	= uWorkoutzones.substring(62, 65);
-		mWorkoutTime[7]		= uWorkoutzones.substring(66, 68);
-		mWorkoutLzone[7] 	= uWorkoutzones.substring(69, 72);
-		mWorkoutHzone[7]	= uWorkoutzones.substring(73, 76);
-		mWorkoutTime[8]		= uWorkoutzones.substring(77, 79);
-		mWorkoutLzone[8] 	= uWorkoutzones.substring(80, 83);
-		mWorkoutHzone[8]	= uWorkoutzones.substring(84, 87);
-		mWorkoutTime[9]		= uWorkoutzones.substring(88, 90);
-		mWorkoutLzone[9] 	= uWorkoutzones.substring(91, 94);
-		mWorkoutHzone[9]	= uWorkoutzones.substring(95, 98);
-		mWorkoutTime[10]	= uWorkoutzones.substring(99, 101);
-		mWorkoutLzone[10] 	= uWorkoutzones.substring(102, 105);
-		mWorkoutHzone[10] 	= uWorkoutzones.substring(106, 109);		
+
+		//!Workout variables setup
+		if (uWorkoutType == 1) { 					//! Set up alerts for Connect workout 
+			i = 0; 
+	    	for (i = 1; i < 19; ++i) {			
+				mWorkoutLzone[i]	= uWorkoutAzones.substring(0+(i-1)*10, 3+(i-1)*10);
+				mWorkoutHzone[i]	= uWorkoutAzones.substring(4+(i-1)*10, 7+(i-1)*10);
+			}		
+
+		} else if (uWorkoutType == 2) { 			//! Set up powerbased workout repeats
+			uWorkoutrepeats		= uWorkoutRzones.substring(15, 16);
+		    mWorkoutAmount[1]	= uWorkoutRzones.substring(0, 4);
+		    mWorkoutType[1]		= uWorkoutRzones.substring(4, 5);
+		    mWorkoutLzone[1]	= uWorkoutRzones.substring(5, 8);
+		    mWorkoutHzone[1]	= uWorkoutRzones.substring(9, 12);
+			repeats		= 2*uWorkoutrepeats.toNumber();
+			i = 0; 
+	    	for (i = 2; i < repeats+2; ++i) {			
+				if (i % 2 == 0) { 
+					mWorkoutAmount[i]	= uWorkoutRzones.substring(18, 22);
+			    	mWorkoutType[i]		= uWorkoutRzones.substring(22, 23);
+			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(23, 26);
+		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(27, 30);
+		    	} else {
+		    		mWorkoutAmount[i]	= uWorkoutRzones.substring(33, 37);
+			    	mWorkoutType[i]		= uWorkoutRzones.substring(37, 38);
+			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(38, 41);
+		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(42, 45);
+				}
+			}
+		    mWorkoutAmount[19]	= uWorkoutRzones.substring(49, 53);
+		    mWorkoutType[19]		= uWorkoutRzones.substring(53, 54);
+		    mWorkoutLzone[19]	= uWorkoutRzones.substring(54, 57);
+		    mWorkoutHzone[19]	= uWorkoutRzones.substring(58, 61);			    
+
+		} else if (uWorkoutType == 3) { 			//! Set up powerbased workout non-repeats
+			i = 0; 
+	    	for (i = 1; i < 19; ++i) {			
+		    	mWorkoutAmount[i]	= uWorkoutzones.substring(0+(i-1)*15, 4+(i-1)*15);
+		    	mWorkoutType[i]		= uWorkoutzones.substring(4+(i-1)*15, 5+(i-1)*15);
+				mWorkoutLzone[i]	= uWorkoutzones.substring(5+(i-1)*15, 8+(i-1)*15);
+				mWorkoutHzone[i]	= uWorkoutzones.substring(9+(i-1)*15, 12+(i-1)*15);
+			}		
+		}
 		
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-		if (mWorkoutTime[1].equals("00") == false ) {
+		if (mWorkoutAmount[1].equals("00") == false ) {
 			if (jTimertime == 0) { 
-				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutTime[1] + " min " + " @ " + mWorkoutLzone[1] + " - " + mWorkoutHzone[1], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[1] + mWorkoutType[1] + " @ " + mWorkoutLzone[1] + " - " + mWorkoutHzone[1], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
 		}
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		
-		var i = 0; 
+		i = 0; 
 	    for (i = 1; i < 8; ++i) {
 	        if (metric[i] == 38) {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
@@ -310,7 +333,7 @@ class CiqView extends ExtramemView {
         }
 
 		var hideText = true;
-    	if (mWorkoutTime[1].equals("00") == false ) {
+    	if (mWorkoutAmount[1].equals("0000") == false ) {
 			if (jTimertime == 0) {
 				if (counter < 3 or counter > 5) { 
 					hideText = false;
