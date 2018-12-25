@@ -25,7 +25,7 @@
     <property id="pWorkoutType" type="number">0</property>
     <property id="pWorkoutAzones" type="string">100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150</property>
     <property id="pWorkoutRzones" type="string">0300s100-190 ; 8x(0120s240-260 ; 0060s190-210) ; 0900s100-190</property>
-    <property id="pWorkoutzones" type="string">0300s100-190 ; 0800m240-260 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m320-340 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0300s100-190</property>
+    <property id="pWorkoutzones" type="string">0300s100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0300s100-190</property>
     <property id="pMilClockAltern" type="number">0</property>
     <property id="prolavPacmaxsecs" type="number">30</property> 
     <property id="prolavPowmaxsecs" type="number">30</property>
@@ -158,7 +158,7 @@
     <string id="lWorkoutType10Steps"> NOT YET WORKING Workout based on times and zones with max 18 steps, created within Datarun (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lWorkoutAzones">NOT YET WORKING Powerzones for workout created in Garmin Connect with max 18 steps, a format required like 100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lWorkoutRzones">NOT YET WORKING Distances/times and powerzones for a workout with max 8 repeats+warm-up+cool-down, a format required like 0300s100-190 ; 8x(0120s240-260 ; 0060s190-210) ; 0900s100-190 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
-    <string id="lWorkoutzones">NOT YET WORKING Distances/times and powerzones for a workout with max 18 steps, a format required like 0300s100-190 ; 0800m240-260 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m300-320 ; 0800m320-340 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m260-280 ; 0300s100-190 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
+    <string id="lWorkoutzones">NOT YET WORKING Distances/times and powerzones for a workout with max 18 steps, a format required like 0300s100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0300s100-190 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="l10Powerzones">Use 10 power zones  instead of 5 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480 (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lCEFactor">Current efficiency Index (only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>

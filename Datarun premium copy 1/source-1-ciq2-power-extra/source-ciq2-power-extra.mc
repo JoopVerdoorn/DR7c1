@@ -13,7 +13,6 @@ class CiqView extends ExtramemView {
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
 	hidden var FilteredCurPower				= 0;
-	//!var sumNormalizedPow 					= 0;
 	var sum4thPowers						= 0;
 	var fourthPowercounter 					= 0;
 	var mIntensityFactor					= 0;
@@ -23,12 +22,18 @@ class CiqView extends ExtramemView {
 	var uWorkoutRzones						= "0300s100-190 ; 8x(0120s240-260 ; 0060s190-210) ; 0900s100-190";
 	var uWorkoutrepeats						= 8;
 	var repeats								= 8;
-	var uWorkoutzones						= "0300s100-190 ; 0800m240-260 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m320-340 ; 0100m100-190 ; 0800m300-320 ; 0100m100-190 ; 0800m280-300 ; 0100m100-190 ; 0800m260-280 ; 0100m100-190 ; 0300s100-190";
+	var uWorkoutzones						= "0300s100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0300s100-190";
 	var mWorkoutAmount						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 	var mWorkoutType						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 	var mWorkoutLzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 	var mWorkoutHzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+	var mWorkoutstepNumber					= 1;
+	var nextAlertD							= 0;
+	var nextAlertT							= 0;
+	var nextAlertType						= "s";
 	var i 									= 0;
+	var hideText 							= false;
+
 		
     function initialize() {
         ExtramemView.initialize();
@@ -68,12 +73,25 @@ class CiqView extends ExtramemView {
         }
 	}
 
+    //! Store last lap quantities and set lap markers after a lap
+    function onTimerLap() {
+		Lapaction ();
+	}
+
+	//! Store last lap quantities and set lap markers after a step within a structured workout
+	function onWorkoutStepComplete() {
+		Lapaction ();
+		Workoutstepalert();
+	}
+
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
 		ExtramemView.onUpdate(dc);
         		
 		//!Calculate HR-metrics
 		var info = Activity.getActivityInfo();
+
+		var jDistance = (info.elapsedDistance != null) ? info.elapsedDistance : 0;
 		
 		var CurrentEfficiencyIndex   	= (info.currentPower != null && info.currentPower != 0) ? Averagespeedinmper3sec*60/info.currentPower : 0;
 		var AverageEfficiencyIndex   	= (info.averageSpeed != null && AveragePower != 0) ? info.averageSpeed*60/AveragePower : 0;
@@ -151,7 +169,9 @@ class CiqView extends ExtramemView {
 			i = 0; 
 	    	for (i = 1; i < 19; ++i) {			
 				mWorkoutLzone[i]	= uWorkoutAzones.substring(0+(i-1)*10, 3+(i-1)*10);
+				
 				mWorkoutHzone[i]	= uWorkoutAzones.substring(4+(i-1)*10, 7+(i-1)*10);
+				
 			}		
 
 		} else if (uWorkoutType == 2) { 			//! Set up powerbased workout repeats
@@ -164,38 +184,80 @@ class CiqView extends ExtramemView {
 			i = 0; 
 	    	for (i = 2; i < repeats+2; ++i) {			
 				if (i % 2 == 0) { 
-					mWorkoutAmount[i]	= uWorkoutRzones.substring(18, 22);
-			    	mWorkoutType[i]		= uWorkoutRzones.substring(22, 23);
-			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(23, 26);
-		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(27, 30);
+					mWorkoutAmount[i]	= uWorkoutRzones.substring(18, 22);					
+			    	mWorkoutType[i]		= uWorkoutRzones.substring(22, 23);			    	
+			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(23, 26);			    	
+		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(27, 30);		    		
 		    	} else {
-		    		mWorkoutAmount[i]	= uWorkoutRzones.substring(33, 37);
-			    	mWorkoutType[i]		= uWorkoutRzones.substring(37, 38);
-			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(38, 41);
-		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(42, 45);
+		    		mWorkoutAmount[i]	= uWorkoutRzones.substring(33, 37);		    		
+			    	mWorkoutType[i]		= uWorkoutRzones.substring(37, 38);			    	
+			    	mWorkoutLzone[i]	= uWorkoutRzones.substring(38, 41);			    
+		    		mWorkoutHzone[i]	= uWorkoutRzones.substring(42, 45);		    		
 				}
 			}
-		    mWorkoutAmount[19]	= uWorkoutRzones.substring(49, 53);
-		    mWorkoutType[19]		= uWorkoutRzones.substring(53, 54);
-		    mWorkoutLzone[19]	= uWorkoutRzones.substring(54, 57);
-		    mWorkoutHzone[19]	= uWorkoutRzones.substring(58, 61);			    
-
 		} else if (uWorkoutType == 3) { 			//! Set up powerbased workout non-repeats
 			i = 0; 
 	    	for (i = 1; i < 19; ++i) {			
-		    	mWorkoutAmount[i]	= uWorkoutzones.substring(0+(i-1)*15, 4+(i-1)*15);
-		    	mWorkoutType[i]		= uWorkoutzones.substring(4+(i-1)*15, 5+(i-1)*15);
-				mWorkoutLzone[i]	= uWorkoutzones.substring(5+(i-1)*15, 8+(i-1)*15);
+		    	mWorkoutAmount[i]	= uWorkoutzones.substring(0+(i-1)*15, 4+(i-1)*15);		    	
+		    	mWorkoutType[i]		= uWorkoutzones.substring(4+(i-1)*15, 5+(i-1)*15);		    	
+				mWorkoutLzone[i]	= uWorkoutzones.substring(5+(i-1)*15, 8+(i-1)*15);				
 				mWorkoutHzone[i]	= uWorkoutzones.substring(9+(i-1)*15, 12+(i-1)*15);
+				
 			}		
 		}
-		
+
+		//!Setup workout notifcations
+		var vibrateData = [
+			new Attention.VibeProfile( 100, 100 )
+		];
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-		if (mWorkoutAmount[1].equals("00") == false ) {
-			if (jTimertime == 0) { 
-				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[1] + mWorkoutType[1] + " @ " + mWorkoutLzone[1] + " - " + mWorkoutHzone[1], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-			}
+		if (uWorkoutType != 0) {
+			if (jTimertime == 0) {
+				mWorkoutstepNumber = 1;
+				hideText = true; 
+				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber] + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber] + " - " + mWorkoutHzone[mWorkoutstepNumber], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+				if (mWorkoutType[1].equals("s")) {
+					nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber];
+					nextAlertType = "s";
+				} else if (mWorkoutType[1].equals("d")) {
+					nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber]*1.609344: jDistance + mWorkoutAmount[mWorkoutstepNumber];
+					nextAlertType = "d";
+				} 
+				mWorkoutstepNumber = mWorkoutstepNumber + 1;
+			} else {
+				hideText = true; 
+				if (nextAlertType == "s") {
+					if (nextAlertT > jTimertime-10 and nextAlertT < jTimertime-5) { 
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber] + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber] + " - " + mWorkoutHzone[mWorkoutstepNumber], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						Toybox.Attention.vibrate(vibrateData);
+						Attention.playTone(Attention.TONE_LOUD_BEEP);
+						Attention.playTone(Attention.TONE_KEY);
+					}
+					if (nextAlertT > jTimertime-6 and nextAlertT < jTimertime-5) {
+						mWorkoutstepNumber = mWorkoutstepNumber + 1;
+					}  
+				}
+				if (nextAlertType == "d") {
+					if (nextAlertD > jDistance-20 and nextAlertT < jDistance-10) { 
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber] + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber] + " - " + mWorkoutHzone[mWorkoutstepNumber], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						Toybox.Attention.vibrate(vibrateData);
+						Attention.playTone(Attention.TONE_LOUD_BEEP);
+						Attention.playTone(Attention.TONE_KEY);
+					}					 
+					if (nextAlertD > jDistance-20 and nextAlertT -5 < jDistance+CurrentSpeedinmpersec) {
+						mWorkoutstepNumber = mWorkoutstepNumber + 1;
+					}  
+				}		
+				if (mWorkoutType[1].equals("s")) {
+					nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 5;
+					nextAlertType = "s";
+				} else if (mWorkoutType[1].equals("d")) {
+					nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber]*1.609344 - 10: jDistance + mWorkoutAmount[mWorkoutstepNumber] - 10;
+					nextAlertType = "d";
+				}
+			}			
 		}
+		
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 		
 		i = 0; 
@@ -332,17 +394,9 @@ class CiqView extends ExtramemView {
         	fieldvalue = (Temp /60000 % 60).format("%02d") + ":" + (Temp /1000 % 60).format("%02d");
         }
 
-		var hideText = true;
-    	if (mWorkoutAmount[1].equals("0000") == false ) {
-			if (jTimertime == 0) {
-				if (counter < 3 or counter > 5) { 
-					hideText = false;
-				}
-			} else {
-				hideText = false;
-			}
-		} else {
-				hideText = false;
+		//! Don't display middle row metrics, if there is a workout notification
+		if (counter < 3 or counter > 5) { 
+			hideText = false;
 		}
 		
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
@@ -385,5 +439,40 @@ class CiqView extends ExtramemView {
     	return val + (val >> 5);
 	}
 
-}
+	function Lapaction () {
+        var info = Activity.getActivityInfo();
+        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
+        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+        mLastLapTimeMarker      	= jTimertime;
 
+        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
+        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
+        mLastLapHeartrateMarker     = mElapsedHeartrate;
+        mLastLapTimeHRMarker        = mHeartrateTime;
+
+        mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
+        mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
+        mLastLapPowerMarker         = mElapsedPower;
+        mLastLapTimePwrMarker       = mPowerTime;        
+
+        mLaps++;	
+	}
+
+	function Workoutstepalert(dc) {
+		hideText = true;
+		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+		var vibrateData = [
+			new Attention.VibeProfile( 100, 100 )
+		];
+		if (mWorkoutstepNumber < 18 ) {
+			if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false) { 
+				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber] + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber] + " - " + mWorkoutHzone[mWorkoutstepNumber], Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			}
+			Toybox.Attention.vibrate(vibrateData);
+			Attention.playTone(Attention.TONE_LOUD_BEEP);
+			Attention.playTone(Attention.TONE_KEY);
+		}
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+	}
+}
