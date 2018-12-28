@@ -213,7 +213,7 @@ class CiqView extends ExtramemView {
 		];
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
 		if (uWorkoutType == 2 or uWorkoutType == 3) {
-			if (jTimertime == 0) {
+			if (jTimertime == 0) {  //! Activity not yet started
 				mWorkoutstepNumber = 1;
 				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 				if (mWorkoutType[1].equals("s")) {
@@ -222,13 +222,7 @@ class CiqView extends ExtramemView {
 				} else if (mWorkoutType[1].equals("d")) {
 					nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber()*1.609344: jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 					nextAlertType = "d";
-				} 
-				//!mWorkoutstepNumber = mWorkoutstepNumber + 1;
-System.println("_______________");
-System.println(nextAlertT);
-System.println(nextAlertD);
-System.println(nextAlertType);
-System.println(mWorkoutstepNumber);				
+				} 			
 			} else if (jTimertime > 0){  //! timer is running
 				if (nextAlertType.equals("s")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
@@ -237,38 +231,40 @@ System.println(mWorkoutstepNumber);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
 					}
+					if (nextAlertT == jTimertime+4) {   //! After the notifications determine next workouttype
+						nextAlertType = mWorkoutType[mWorkoutstepNumber+1];
+					}
 				}
 				if (nextAlertType.equals("d")) {
-					if (nextAlertD > jDistance+20 and nextAlertT < jDistance+10) {       //! Notification nearing the end of a distance-based step 
+					if (nextAlertD > jDistance+10 and nextAlertT < jDistance+20) {       //! Notification nearing the end of a distance-based step 
 						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + mWorkoutType[mWorkoutstepNumber+1] + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
+					}
+					if (nextAlertD > jDistance+9 and nextAlertD > jDistance+9+CurrentSpeedinmpersec) {   //! After the notifications determine next workouttype
+						nextAlertType = mWorkoutType[mWorkoutstepNumber+1];
 					}					 
 				}		
-
-				if (jTimertime > nextAlertT and nextAlertType.equals("s")) {			//! move to next step at the end of a time-based step
-					if (nextAlertT == jTimertime) {	
-						mWorkoutstepNumber = mWorkoutstepNumber + 1;
-//!System.println("nu mWorkoutstepNumber omhoog");						
+				if (jTimertime == nextAlertT and nextAlertType.equals("s")) {			//! Setting up next alert at the end of a time-based step
+						
 						if (mWorkoutType[mWorkoutstepNumber].equals("s")) { 	//! setting up next time-based alert       
-							nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 5;
+							nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 							nextAlertType = "s";				
 						} else if (mWorkoutType[mWorkoutstepNumber].equals("d")) {		//! setting up next distance-based alert
-							nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber()*1.609344 - 10: jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 10;
+							nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber()*1.609344: jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 							nextAlertType = "d";
 						}
-					}  
+					  
 
 				}
-				if ( jDistance > nextAlertD and nextAlertType.equals("d")) {			//! move to next step at the end of a distance-based step			 
+				if ( jDistance > nextAlertD and nextAlertType.equals("d")) {			//! Setting up next alert at the end of a distance-based step			 
 					if (nextAlertD < jDistance + CurrentSpeedinmpersec) {
-						mWorkoutstepNumber = mWorkoutstepNumber + 1;  
 						if (mWorkoutType[mWorkoutstepNumber].equals("s")) { 	//! setting up time-based next alert       
-							nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 5;
+							nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 							nextAlertType = "s";	
 						} else if (mWorkoutType[mWorkoutstepNumber].equals("d")) {	//! setting up next distance-based alert
-						nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber()*1.609344 - 10: jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 10;
+						nextAlertD = (unitD == 1609.344) ? jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber()*1.609344 : jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 						nextAlertType = "d";
 						}
 					}  
@@ -281,7 +277,7 @@ System.println(mWorkoutstepNumber);
 
 				
 
-System.println("______step_________");
+//!System.println("______step_________");
 
 //!System.println(nextAlertD);
 //!System.println(nextAlertType);
