@@ -33,6 +33,7 @@ class CiqView extends ExtramemView {
 	var nextAlertType						= "s";
 	var i 									= 0;
 	var hideText 							= false;
+	hidden var jDistance 					= 0;
 
 		
     function initialize() {
@@ -91,7 +92,7 @@ class CiqView extends ExtramemView {
 		//!Calculate HR-metrics
 		var info = Activity.getActivityInfo();
 
-		var jDistance = (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+		jDistance = (info.elapsedDistance != null) ? info.elapsedDistance : 0;
 		
 		var CurrentEfficiencyIndex   	= (info.currentPower != null && info.currentPower != 0) ? Averagespeedinmper3sec*60/info.currentPower : 0;
 		var AverageEfficiencyIndex   	= (info.averageSpeed != null && AveragePower != 0) ? info.averageSpeed*60/AveragePower : 0;
@@ -214,7 +215,6 @@ class CiqView extends ExtramemView {
 		if (uWorkoutType == 2 or uWorkoutType == 3) {
 			if (jTimertime == 0) {
 				mWorkoutstepNumber = 1;
-				hideText = true; 
 				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 				if (mWorkoutType[1].equals("s")) {
 					nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber();
@@ -230,27 +230,27 @@ System.println(nextAlertD);
 System.println(nextAlertType);
 System.println(mWorkoutstepNumber);				
 			} else if (jTimertime > 0){  //! timer is running
-				if (nextAlertType == "s") {
-					if (nextAlertT > jTimertime-10 and nextAlertT < jTimertime-5) {      //! Notification nearing the end of a time-based step  
-						hideText = true;
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+				if (nextAlertType.equals("s")) {
+					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + mWorkoutType[mWorkoutstepNumber+1] + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
 					}
 				}
-				if (nextAlertType == "d") {
-					if (nextAlertD > jDistance-20 and nextAlertT < jDistance-10) {       //! Notification nearing the end of a distance-based step 
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+				if (nextAlertType.equals("d")) {
+					if (nextAlertD > jDistance+20 and nextAlertT < jDistance+10) {       //! Notification nearing the end of a distance-based step 
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + mWorkoutType[mWorkoutstepNumber+1] + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
 					}					 
 				}		
 
-				if (jTimertime > nextAlertT and nextAlertType == "s") {			//! move to next step at the end of a time-based step
+				if (jTimertime > nextAlertT and nextAlertType.equals("s")) {			//! move to next step at the end of a time-based step
 					if (nextAlertT == jTimertime) {	
 						mWorkoutstepNumber = mWorkoutstepNumber + 1;
+//!System.println("nu mWorkoutstepNumber omhoog");						
 						if (mWorkoutType[mWorkoutstepNumber].equals("s")) { 	//! setting up next time-based alert       
 							nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber() - 5;
 							nextAlertType = "s";				
@@ -261,7 +261,7 @@ System.println(mWorkoutstepNumber);
 					}  
 
 				}
-				if ( jDistance > nextAlertD and nextAlertType == "d") {			//! move to next step at the end of a distance-based step			 
+				if ( jDistance > nextAlertD and nextAlertType.equals("d")) {			//! move to next step at the end of a distance-based step			 
 					if (nextAlertD < jDistance + CurrentSpeedinmpersec) {
 						mWorkoutstepNumber = mWorkoutstepNumber + 1;  
 						if (mWorkoutType[mWorkoutstepNumber].equals("s")) { 	//! setting up time-based next alert       
@@ -276,16 +276,16 @@ System.println(mWorkoutstepNumber);
 				}
 				
 
-System.println("nu mWorkoutstepNumber omhoog");						
+						
   
 
-System.println("nu nextAlertT  " + jTimertime);					
+				
 
 System.println("______step_________");
-System.println(nextAlertT);
-System.println(nextAlertD);
-System.println(nextAlertType);
-System.println(mWorkoutstepNumber);
+
+//!System.println(nextAlertD);
+//!System.println(nextAlertType);
+//!System.println(mWorkoutstepNumber);
 				
 			}			
 		}
@@ -425,10 +425,21 @@ System.println(mWorkoutstepNumber);
         	Temp = (fieldvalue != 0 ) ? (fieldvalue).toLong() : 0;
         	fieldvalue = (Temp /60000 % 60).format("%02d") + ":" + (Temp /1000 % 60).format("%02d");
         }
-
+        
 		//! Don't display middle row metrics, if there is a workout notification
-		if (counter < 3 or counter > 5) { 
-			hideText = false;
+		hideText = false;
+		if (uWorkoutType == 2 or uWorkoutType == 3) {
+			if (counter == 3 or counter == 4 or counter == 5) { 
+				if (jTimertime == 0) {
+					hideText = true;
+				} 								
+				if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {
+					hideText = true;
+				}
+				if (nextAlertD > jDistance+20 and nextAlertT < jDistance+10) {
+					hideText = true;
+				}
+			}
 		}
 		
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
