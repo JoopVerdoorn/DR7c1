@@ -49,8 +49,11 @@ class CiqView extends ExtramemView {
 		uWorkoutAzones	 = mApp.getProperty("pWorkoutAzones");
 		uWorkoutRzones	 = mApp.getProperty("pWorkoutRzones");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
-		if (metric[1] == 57 or metric[2] == 57 or metric[3] == 57 or metric[4] == 57 or metric[5] == 57 or metric[6] == 57 or metric[7] == 57) {
-			rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
+		i = 0; 
+	    for (i = 1; i < 8; ++i) {		
+			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
+				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
+			}
 		}			
     }
 
@@ -129,7 +132,7 @@ class CiqView extends ExtramemView {
 		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > 2000) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
 		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
-			rollingPwrValue [i] = rollingPwrValue [i+1];
+			rollingPwrValue[i] = rollingPwrValue[i+1];
 		}
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			totalRPw = rollingPwrValue[i] + totalRPw;
@@ -148,16 +151,21 @@ class CiqView extends ExtramemView {
 		//!Calculate normalized power
 		var mNormalizedPow = 0;
 		var rollingPwr30s = 0;
-		if (jTimertime > 30) {
-			for (var i = 1; i < 31; ++i) {
-				rollingPwr30s = rollingPwr30s + rollingPwrValue [rolavPowmaxsecs+2-i];
+		var j = 0; 
+	    for (j = 1; i < 8; ++j) {
+			if (metric[j] == 57 or metric[j] == 58 or metric[j] == 59) {
+				if (jTimertime > 30) {
+					for (var i = 1; i < 31; ++i) {
+						rollingPwr30s = rollingPwr30s + rollingPwrValue [rolavPowmaxsecs+2-i];
+					}
+					rollingPwr30s = rollingPwr30s/30;
+					if (mTimerRunning == true) {
+						sum4thPowers = sum4thPowers + Math.pow(rollingPwr30s,4);
+						fourthPowercounter = fourthPowercounter + 1; 
+					}
+				mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));
+				}
 			}
-			rollingPwr30s = rollingPwr30s/30;
-			if (mTimerRunning == true) {
-				sum4thPowers = sum4thPowers + Math.pow(rollingPwr30s,4);
-				fourthPowercounter = fourthPowercounter + 1; 
-			}
-			mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));
 		}		
 
 		//! Calculate IF and TTS
