@@ -34,7 +34,9 @@ class CiqView extends ExtramemView {
 	var i 									= 0;
 	var hideText 							= false;
 	hidden var jDistance 					= 0;
-
+	var uspikeTreshold						= 2000;
+	var runPower							= 0;
+	var lastsrunPower						= 0;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -49,6 +51,7 @@ class CiqView extends ExtramemView {
 		uWorkoutAzones	 = mApp.getProperty("pWorkoutAzones");
 		uWorkoutRzones	 = mApp.getProperty("pWorkoutRzones");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
+		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
 		i = 0; 
 	    for (i = 1; i < 8; ++i) {		
 			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
@@ -65,15 +68,18 @@ class CiqView extends ExtramemView {
         }
 		//! We only do some calculations if the timer is running
 		if (mTimerRunning) {  
-			jTimertime = jTimertime + 1;
+			jTimertime 		 = jTimertime + 1;
 			//!Calculate lapheartrate
-            mHeartrateTime		 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
-           	mElapsedHeartrate    = (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
+            mHeartrateTime	 = (info.currentHeartRate != null) ? mHeartrateTime+1 : mHeartrateTime;				
+           	mElapsedHeartrate= (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
             //!Calculate lappower
             mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
-			mElapsedPower    = (info.currentPower != null) ? mElapsedPower + info.currentPower : mElapsedPower;
-			
-			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow(((info.currentPower+0.001)/uCP),3.5) : RSS; 			             
+//!temporary solution for power spikes > spikeTreshold Watt 		
+            runPower 		 = (info.currentPower != null) ? info.currentPower : 0;
+            runPower 		 = (runPower > uspikeTreshold) ? lastsrunPower : runPower;
+			mElapsedPower    = mElapsedPower + runPower;
+			lastsrunPower 	 = runPower;
+			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow(((runPower+0.001)/uCP),3.5) : RSS; 			             
         }
 	}
 
@@ -128,8 +134,8 @@ class CiqView extends ExtramemView {
 		}
 		counterPower = counterPower + 1;
 		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
-//!temporary solution for power spikes > 2000 Wat 		
-		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > 2000) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
+//!temporary solution for power spikes > spikeTreshold Wat 		
+		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > uspikeTreshold) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
 		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			rollingPwrValue[i] = rollingPwrValue[i+1];
@@ -172,17 +178,13 @@ class CiqView extends ExtramemView {
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
 		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
 
-
 		//!Workout variables setup
 		if (uWorkoutType == 1) { 					//! Set up alerts for Connect workout 
 			i = 0; 
 	    	for (i = 1; i < 19; ++i) {			
 				mWorkoutLzone[i]	= uWorkoutAzones.substring(0+(i-1)*10, 3+(i-1)*10);
-				
 				mWorkoutHzone[i]	= uWorkoutAzones.substring(4+(i-1)*10, 7+(i-1)*10);
-				
 			}		
-
 		} else if (uWorkoutType == 2) { 			//! Set up powerbased workout repeats
 			uWorkoutrepeats		= uWorkoutRzones.substring(15, 16);
 		    mWorkoutAmount[1]	= uWorkoutRzones.substring(0, 4);
@@ -218,7 +220,7 @@ class CiqView extends ExtramemView {
 		//!Setup workout notifcations
 		var vibrateData = [
 			new Attention.VibeProfile( 100, 100 )
-		];
+		    ];
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
 		if (uWorkoutType == 2 or uWorkoutType == 3) {
 			if (jTimertime == 0) {  //! Activity not yet started
