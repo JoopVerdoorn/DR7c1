@@ -37,7 +37,6 @@ class CiqView extends ExtramemView {
 	var uspikeTreshold						= 2000;
 	var runPower							= 0;
 	var lastsrunPower						= 0;
-	var tempcounter							= 0;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -221,19 +220,6 @@ class CiqView extends ExtramemView {
 			}		
 		}
 
-if (jTimertime == 0) {
-i = 0; 
-	for (i = 1; i < 19; ++i) {			
-	  if (tempcounter < 1) {	
-		System.println("______settings_________");
-		System.println("mWorkoutAmount van " + i + " = " + mWorkoutAmount[i]);		    	
-		System.println("mWorkoutType van " + i + " = " + mWorkoutType[i]);		    	
-		System.println("mWorkoutLzone van " + i + " = " + mWorkoutLzone[i]);				
-		System.println("mWorkoutHzone van " + i + " = " + mWorkoutHzone[i]);
-		tempcounter = tempcounter + 1;
-	  }
-	}	
-}
 
 		//!Setup workout notifcations
 		var vibrateData = [
@@ -244,34 +230,34 @@ i = 0;
 			if (jTimertime == 0) {  //! Activity not yet started
 				mWorkoutstepNumber = 1;
 				if (mWorkoutType[1].equals("t")) {
-					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
+					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
 					nextAlertT = jTimertime + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 					nextAlertType = "t";
 				} else if (mWorkoutType[1].equals("d")) {
-					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
+					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
 					nextAlertD = jDistance + mWorkoutAmount[mWorkoutstepNumber].toNumber();
 					nextAlertType = "d";
 				} 			
 			} else if (jTimertime > 0){  //! timer is running
 				if (nextAlertType.equals("t")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
 					}
-					if (nextAlertT == jTimertime+4) {   //! After the notifications determine next workouttype
+					if (nextAlertT == jTimertime) {   //! After the notifications determine next workouttype
 						nextAlertType = mWorkoutType[mWorkoutstepNumber+1];
 					}
 				}
 				if (nextAlertType.equals("d")) {
-					if (nextAlertD > jDistance+10 and nextAlertT < jDistance+20) {       //! Notification nearing the end of a distance-based step 
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+					if (nextAlertD > jDistance+10 and nextAlertD < jDistance+25) {       //! Notification nearing the end of a distance-based step 
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
 					}
-					if (nextAlertD > jDistance+9) {   //! After the notifications determine next workouttype
+					if (nextAlertD > jDistance) {   //! After the notifications determine next workouttype
 						nextAlertType = mWorkoutType[mWorkoutstepNumber+1];
 					}					 
 				}		
@@ -299,13 +285,13 @@ i = 0;
 						}
 					}  
 				}
-System.println("______step_________");
-System.println("jTimertime = " + jTimertime);
-System.println("nextAlertT = " + nextAlertT);
-System.println("jDistance = " + jDistance);
-System.println("nextAlertD = " + nextAlertD);
-System.println("nextAlertType = " + nextAlertType);
-System.println("mWorkoutstepNumber = " + mWorkoutstepNumber);
+//!System.println("______step_________");
+//!System.println("jTimertime = " + jTimertime);
+//!System.println("nextAlertT = " + nextAlertT);
+//!System.println("jDistance = " + jDistance);
+//!System.println("nextAlertD = " + nextAlertD);
+//!System.println("nextAlertType = " + nextAlertType);
+//!System.println("mWorkoutstepNumber = " + mWorkoutstepNumber);
 			}			
 		}
 		
@@ -455,7 +441,7 @@ System.println("mWorkoutstepNumber = " + mWorkoutstepNumber);
 				if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {
 					hideText = true;
 				}
-				if (nextAlertD > jDistance+20 and nextAlertT < jDistance+10) {
+				if (nextAlertD > jDistance+10 and nextAlertD < jDistance+25) {
 					hideText = true;
 				}
 			}
@@ -529,7 +515,7 @@ System.println("mWorkoutstepNumber = " + mWorkoutstepNumber);
 		];
 		if (mWorkoutstepNumber < 18 ) {
 			if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false) { 
-				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + " - " + mWorkoutHzone[mWorkoutstepNumber].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + mWorkoutType[mWorkoutstepNumber] + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
 			Toybox.Attention.vibrate(vibrateData);
 			Attention.playTone(Attention.TONE_LOUD_BEEP);
