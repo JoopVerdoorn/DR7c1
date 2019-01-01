@@ -37,7 +37,8 @@ class CiqView extends ExtramemView {
 	var uspikeTreshold						= 2000;
 	var runPower							= 0;
 	var lastsrunPower						= 0;
-	var sethideText 							= false;
+	var sethideText 						= false;
+	var setPowerWarning 					= 0;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -87,6 +88,12 @@ class CiqView extends ExtramemView {
     //! Store last lap quantities and set lap markers after a lap
     function onTimerLap() {
 		Lapaction ();
+	}
+
+	//! Store last lap quantities and set lap markers after a step within a structured workout
+	function onWorkoutStepComplete() {
+		Lapaction ();
+		Workoutstepalert();
 	}
 
 	function onUpdate(dc) {
@@ -235,38 +242,32 @@ class CiqView extends ExtramemView {
 					nextAlertType = "d";
 				} 			
 			} else if (jTimertime > 0){  //! timer is running
-
-		//!var DisplayPower  = (info.currentPower != null) ? info.currentPower : 0;
-		PowerWarning = 0;
-		if (AveragePower3sec > mWorkoutHzone[mWorkoutstepNumber].toNumber() or AveragePower3sec < mWorkoutLzone[mWorkoutstepNumber].toNumber()) {		 
-			 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
-			 	vibrateseconds = vibrateseconds + 1;	 		  			
-    			if (AveragePower3sec>mWorkoutHzone[mWorkoutstepNumber].toNumber()) {
-    				PowerWarning = 1;
-    				if (vibrateseconds == uWarningFreq) {
-    					Toybox.Attention.vibrate(vibrateData);
-    					if (uAlertbeep == true) {
-    						Attention.playTone(Attention.TONE_KEY);
-    					}
-    					vibrateseconds = 0;
-    				}
-    			} else if (AveragePower3sec<mWorkoutLzone[mWorkoutstepNumber].toNumber()){
-    				PowerWarning = 2;
-    				if (vibrateseconds == uWarningFreq) {
-    					
-    						if (uAlertbeep == true) {
-    							Attention.playTone(Attention.TONE_LOUD_BEEP);
+				setPowerWarning = 0;
+				//! Executing alerts
+				if (runPower > mWorkoutHzone[mWorkoutstepNumber].toNumber() or runPower < mWorkoutLzone[mWorkoutstepNumber].toNumber()) {		 
+					 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
+					 	vibrateseconds = vibrateseconds + 1;	 		  			
+    					if (runPower>mWorkoutHzone[mWorkoutstepNumber].toNumber()) {
+    						setPowerWarning = 1;
+    						if (vibrateseconds == uWarningFreq) {
+    							Toybox.Attention.vibrate(vibrateData);
+    							if (uAlertbeep == true) {
+    								Attention.playTone(Attention.TONE_KEY);
+		    					}
+    							vibrateseconds = 0;
     						}
-    					Toybox.Attention.vibrate(vibrateData);
-    					vibrateseconds = 0;
-    				}
-    			} 
-			 } 
-		}		
-				
-				
-				
-				
+    					} else if (runPower<mWorkoutLzone[mWorkoutstepNumber].toNumber()){
+    						setPowerWarning = 2;
+    						if (vibrateseconds == uWarningFreq) {
+    							if (uAlertbeep == true) {
+    								Attention.playTone(Attention.TONE_LOUD_BEEP);
+	    						}
+    						Toybox.Attention.vibrate(vibrateData);
+    						vibrateseconds = 0;
+	    					}
+    					} 
+					 } 
+				}		
 				if (nextAlertType.equals("t")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
 					  if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false or mWorkoutstepNumber < 18) {
@@ -465,7 +466,9 @@ class CiqView extends ExtramemView {
         	Temp = (fieldvalue != 0 ) ? (unitP/fieldvalue).toLong() : 0;
         	fieldvalue = (Temp / 60).format("%0d") + ":" + Math.round(Temp % 60).format("%02d");
         } else if ( fieldformat.equals("power" ) == true ) {     
-        	fieldvalue = Math.round(fieldvalue);       	
+        	fieldvalue = Math.round(fieldvalue);
+        	PowerWarning = (setPowerWarning == 1) ? 1 : PowerWarning;    	
+        	PowerWarning = (setPowerWarning == 2) ? 2 : PowerWarning;
         	if (PowerWarning == 1) { 
         		mColourFont = Graphics.COLOR_PURPLE;
         	} else if (PowerWarning == 2) { 
