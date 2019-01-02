@@ -2,15 +2,19 @@ class ExtramemView extends DatarunpremiumView {
 	hidden var uHrZones   			        = [ 93, 111, 130, 148, 167, 185 ];	
 	hidden var uPowerZones                  = "184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369";
 	hidden var uPower10Zones				= "180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480";
-	hidden var PalPowerzones = false;
+	hidden var PalPowerzones 				= false;
 	var mZone 								= [1, 2, 3, 4, 5, 6, 7, 8];
 	var uBlackBackground 					= false;    	
-	var counterPace 							= 0;
-	var rollingPaceValue = new [303];
-	var totalRPa = 0;
-	var rolavPacmaxsecs = 30;
-	var Averagespeedinmpersec = 0;
-	var uClockFieldMetric = 38; //! Powerzone is default
+	var counterPace 						= 0;
+	var rollingPaceValue 					= new [303];
+	var totalRPa 							= 0;
+	var rolavPacmaxsecs 					= 30;
+	var Averagespeedinmpersec 				= 0;
+	var uClockFieldMetric 					= 38; //! Powerzone is default
+	var mETA								= 0;
+	var uETAfromLap 						= true;
+	var HRzone								= 0;
+	hidden var Powerzone					= 0;
 	
     function initialize() {
         DatarunpremiumView.initialize();

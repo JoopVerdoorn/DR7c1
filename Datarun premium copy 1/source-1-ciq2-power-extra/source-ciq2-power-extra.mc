@@ -10,8 +10,6 @@ class CiqView extends ExtramemView {
 	var uFTP								= 250;    
 	var uCP									= 250;
 	var RSS									= 0;
-	hidden var mETA							= 0;
-	hidden var uETAfromLap 					= true;
 	hidden var FilteredCurPower				= 0;
 	var sum4thPowers						= 0;
 	var fourthPowercounter 					= 0;
@@ -30,10 +28,11 @@ class CiqView extends ExtramemView {
 	var mWorkoutstepNumber					= 1;
 	var nextAlertD							= 0;
 	var nextAlertT							= 0;
-	var nextAlertType						= "s";
+	var nextAlertType						= "t";
+	var workoutUnit							= "sec";
 	var i 									= 0;
 	var hideText 							= false;
-	hidden var jDistance 					= 0;
+	var jDistance 							= 0;
 	var uspikeTreshold						= 2000;
 	var runPower							= 0;
 	var lastsrunPower						= 0;
@@ -159,9 +158,10 @@ class CiqView extends ExtramemView {
 		//!Calculate normalized power
 		var mNormalizedPow = 0;
 		var rollingPwr30s = 0;
-		var j = 0; 
-	    for (j = 1; i < 8; ++j) {
+		var j = 0; 		
+	    for (j = 1; j < 8; ++j) {
 			if (metric[j] == 57 or metric[j] == 58 or metric[j] == 59) {
+
 				if (jTimertime > 30) {
 					for (var i = 1; i < 31; ++i) {
 						rollingPwr30s = rollingPwr30s + rollingPwrValue [rolavPowmaxsecs+2-i];
@@ -171,10 +171,11 @@ class CiqView extends ExtramemView {
 						sum4thPowers = sum4thPowers + Math.pow(rollingPwr30s,4);
 						fourthPowercounter = fourthPowercounter + 1; 
 					}
-				mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));
+				mNormalizedPow = Math.round(Math.pow(sum4thPowers/fourthPowercounter,0.25));				
 				}
 			}
 		}		
+
 
 		//! Calculate IF and TTS
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
@@ -268,10 +269,11 @@ class CiqView extends ExtramemView {
     					} 
 					 } 
 				}		
+				workoutUnit = (mWorkoutType[mWorkoutstepNumber+1].equals("t")) ? "sec" : "met";
 				if (nextAlertType.equals("t")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
 					  if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false or mWorkoutstepNumber < 18) {
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " " + workoutUnit + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
@@ -286,11 +288,11 @@ class CiqView extends ExtramemView {
 					  if (nextAlertT == jTimertime) {   //! After the notifications determine next workouttype
 						nextAlertType = mWorkoutType[mWorkoutstepNumber+1];
 					  } 
-				}
+				}			
 				if (nextAlertType.equals("d")) {
-					if (nextAlertD > jDistance+10 and nextAlertD < jDistance+25) {       //! Notification nearing the end of a distance-based step 
+					if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {       //! Notification nearing the end of a distance-based step 
 					  if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false or mWorkoutstepNumber < 18) {
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " " + workoutUnit + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
 						Attention.playTone(Attention.TONE_LOUD_BEEP);
 						Attention.playTone(Attention.TONE_KEY);
@@ -491,7 +493,7 @@ class CiqView extends ExtramemView {
 				if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {
 					hideText = true;
 				}
-				if (nextAlertD > jDistance+10 and nextAlertD < jDistance+25) {
+				if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {
 					hideText = true;
 				}
 			}

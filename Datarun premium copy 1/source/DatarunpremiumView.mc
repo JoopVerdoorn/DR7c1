@@ -38,8 +38,8 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var fieldLabel = [1, 2, 3, 4, 5, 6, 7, 8];
 	hidden var fieldFormat = [1, 2, 3, 4, 5, 6, 7, 8];	
 
-    hidden var Averagespeedinmper3sec 			= 0;
-    hidden var Averagespeedinmper5sec 			= 0;
+    var Averagespeedinmper3sec 			= 0;
+    var Averagespeedinmper5sec 			= 0;
     hidden var mColour;
     hidden var mColourFont;
 	hidden var mColourFont1;
@@ -51,14 +51,14 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var mTimerRunning                = false;	
     hidden var unitP                        = 1000.0;
     hidden var unitD                        = 1000.0;
-    hidden var Pace1 								= 0;
-    hidden var Pace2 								= 0;
-    hidden var Pace3 								= 0;
-	hidden var Pace4 								= 0;
-    hidden var Pace5 								= 0;
+    var Pace1 								= 0;
+    var Pace2 								= 0;
+    var Pace3 								= 0;
+	var Pace4 								= 0;
+    var Pace5 								= 0;
 
-    hidden var CurrentSpeedinmpersec			= 0;
-    hidden var uRoundedPace                 = true;
+    var CurrentSpeedinmpersec		= 0;
+    var uRoundedPace                 = true;
 
     hidden var uBacklight                   = false;
 
@@ -74,8 +74,6 @@ class DatarunpremiumView extends Ui.DataField {
     hidden var uAlertbeep			 		= false;
 	hidden var uNoAlerts 					= false;
 	hidden var PowerWarning 				= 0;
-	hidden var Powerzone					= 0;
-	hidden var HRzone						= 0;
     
     hidden var mStartStopPushed             = 0;    //! Timer value when the start/stop button was last pushed
 
@@ -206,7 +204,6 @@ class DatarunpremiumView extends Ui.DataField {
 
 		AverageHeartrate = Math.round((mHeartrateTime != 0) ? mElapsedHeartrate/mHeartrateTime : 0);  		
 		LapHeartrate = (mLapTimerTimeHR != 0) ? Math.round(mLapElapsedHeartrate/mLapTimerTimeHR) : 0; 					
-		LapHeartrate = (mLaps == 1) ? AverageHeartrate : LapHeartrate;
 		LastLapHeartrate			= (mLastLapTimerTime != 0) ? Math.round(mLastLapElapsedHeartrate/mLastLapTimerTime) : 0;
 
         //! Calculate lap time
@@ -227,11 +224,11 @@ class DatarunpremiumView extends Ui.DataField {
         }
 
 		//! Calculate average speed
-        var currentSpeedtest				= 0;
+        CurrentSpeedinmpersec = 0;
         if (info.currentSpeed != null) {
-        	currentSpeedtest = info.currentSpeed; 
+        	CurrentSpeedinmpersec = info.currentSpeed; 
         }
-        if (currentSpeedtest > 0) {
+        if (CurrentSpeedinmpersec > 0) {
             	//! Calculate average pace
 				if (info.currentSpeed != null) {
         		Pace5 								= Pace4;
@@ -248,7 +245,7 @@ class DatarunpremiumView extends Ui.DataField {
 				}
 				Averagespeedinmper5sec= (uRoundedPace) ? unitP/(Math.round( (unitP/(Pace1+Pace2+Pace3+Pace4+Pace5)*5) / 5 ) * 5) : (Pace1+Pace2+Pace3+Pace4+Pace5)/5;
 				Averagespeedinmper3sec= (uRoundedPace) ? unitP/(Math.round( (unitP/(Pace1+Pace2+Pace3)*3) / 5 ) * 5) : (Pace1+Pace2+Pace3)/3;
-				CurrentSpeedinmpersec= (uRoundedPace) ? unitP/(Math.round( unitP/currentSpeedtest / 5 ) * 5) : currentSpeedtest;
+				CurrentSpeedinmpersec= (uRoundedPace) ? unitP/(Math.round( unitP/CurrentSpeedinmpersec / 5 ) * 5) : CurrentSpeedinmpersec;
 		}
 
 		//! Determine required finish time and calculate required pace 	

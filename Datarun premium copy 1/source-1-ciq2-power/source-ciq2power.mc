@@ -64,8 +64,6 @@ class CiqView extends DatarunpremiumView {
         xl = xl.toNumber();
         yl = yl.toNumber();
 
-		fieldvalue = (metric[counter]==38) ? Powerzone : fieldvalue; 
-		fieldvalue = (metric[counter]==46) ? HRzone : fieldvalue;
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = fieldvalue.format("%.0f");        	
         } else if ( fieldformat.equals("2decimal" ) == true ) {

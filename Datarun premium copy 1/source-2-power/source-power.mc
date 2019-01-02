@@ -56,7 +56,6 @@ class PowerView extends CiqView {
         
 		AveragePower = Math.round((mPowerTime != 0) ? mElapsedPower/mPowerTime : 0);  
 		LapPower = (mLapTimerTimePwr != 0) ? Math.round(mLapElapsedPower/mLapTimerTimePwr) : 0; 	
-		LapPower = (mLaps == 1) ? AveragePower : LapPower; 
 		LastLapPower = (mLastLapTimerTimePwr != 0) ? Math.round(mLastLapElapsedPower/mLastLapTimerTimePwr) : 0;
 
 		//!Calculate average power
