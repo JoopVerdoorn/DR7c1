@@ -127,6 +127,7 @@ class DatarunpremiumView extends Ui.DataField {
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
+         var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
 	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
             unitP = 1609.344;
@@ -148,7 +149,7 @@ class DatarunpremiumView extends Ui.DataField {
 		mtest = (mtest < 1000) ? mtest + 80000 : mtest;
         
 		CCode = hashfunction(umyNumber.toString())+548831;                
-		CCode = hashfunction(CCode)-4785;
+		CCode = CCode*hashfunction((uHrZones[2]*uHrZones[4]+uHrZones[1]+uHrZones[3]).toString())-4785;
         CCode = (CCode > 0) ? CCode : -CCode; 
         CCode = CCode % 346898 + 54215;   
         licenseOK = (umyNumber == mtest or CCode == uCCnumber) ? true : false;
@@ -322,6 +323,26 @@ class DatarunpremiumView extends Ui.DataField {
         		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
         			fieldValue[i] = (uRacedistance - info.elapsedDistance) / (mRacetime - jTimertime);
         		} 
+	        } else if (metric[i] == 40) {
+    	        fieldValue[i] = (info.currentSpeed != null) ? 3.6*info.currentSpeed*1000/unitP : 0;
+        	    fieldLabel[i] = "Speed";
+            	fieldFormat[i] = "2decimal";   
+	        } else if (metric[i] == 41) {
+    	        fieldValue[i] = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3+Pace4+Pace5)/5)*1000/unitP : 0;
+        	    fieldLabel[i] = "Spd 5s";
+            	fieldFormat[i] = "2decimal";
+	        } else if (metric[i] == 42) {
+    	        fieldValue[i] = (mLapSpeed != null) ? 3.6*mLapSpeed*1000/unitP  : 0;
+        	    fieldLabel[i] = "L Spd";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 43) {
+    	        fieldValue[i] = (mLastLapSpeed != null) ? 3.6*mLastLapSpeed*1000/unitP : 0;
+        	    fieldLabel[i] = "LL Spd";
+            	fieldFormat[i] = "2decimal";
+			} else if (metric[i] == 44) {
+	            fieldValue[i] = (info.averageSpeed != null) ? 3.6*info.averageSpeed*1000/unitP : 0;
+    	        fieldLabel[i] = "Avg Spd";
+        	    fieldFormat[i] = "2decimal";
 			} else if (metric[i] == 47) {
     	        fieldValue[i] = LapHeartrate;
         	    fieldLabel[i] = "Lap HR";
