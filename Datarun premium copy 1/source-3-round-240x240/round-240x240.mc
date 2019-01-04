@@ -33,13 +33,29 @@ class DeviceView extends PowerView {
 
         //! Top vertical divider
         dc.drawLine(119, 29,  119, 92);
-
-        //! Centre vertical dividers
-        dc.drawLine(73,  92,  73,  156);
-        dc.drawLine(164, 92,  164, 156);
+		
+        //! Centre vertical dividers. Don't display dividers, if there is a workout notification
+		var hideDiv = false;
+		if (uWorkoutType != 0) {
+       		if (jTimertime == 0) {
+       			hideDiv = true;
+       		} 								
+			if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {
+				hideDiv = true;
+			}
+			if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {
+				hideDiv = true;
+			}
+		}
+		if (hideDiv == false) {
+	        dc.drawLine(73,  92,  73,  156);
+       		dc.drawLine(164, 92,  164, 156);
+		}
 
         //! Bottom vertical divider
-        dc.drawLine(119, 156, 119, 219);
+        if (jTimertime != 0) {
+        	dc.drawLine(119, 156, 119, 219);
+        }
         
         //! Bottom horizontal divider
         dc.drawLine(53, 219, 187, 219);

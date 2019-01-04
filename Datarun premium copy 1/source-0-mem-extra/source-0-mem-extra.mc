@@ -223,26 +223,6 @@ class ExtramemView extends DatarunpremiumView {
         		if (info.elapsedDistance != null and mRacetime != jTimertime and mRacetime > jTimertime) {
         			CFMValue = (uRacedistance - info.elapsedDistance) / (mRacetime - info.timerTime/1000);
         		} 
-	        } else if (uClockFieldMetric == 40) {
-    	        CFMValue = (info.currentSpeed != null) ? 3.6*info.currentSpeed*1000/unitP : 0;
-        	    CFMLabel = "Speed";
-            	CFMFormat = "2decimal";   
-	        } else if (uClockFieldMetric == 41) {
-    	        CFMValue = (info.currentSpeed != null) ? 3.6*((Pace1+Pace2+Pace3+Pace4+Pace5)/5)*1000/unitP : 0;
-        	    CFMLabel = "Spd 5s";
-            	CFMFormat = "2decimal";
-	        } else if (uClockFieldMetric == 42) {
-    	        CFMValue = (mLapSpeed != null) ? 3.6*mLapSpeed*1000/unitP  : 0;
-        	    CFMLabel = "L Spd";
-            	CFMFormat = "2decimal";
-			} else if (uClockFieldMetric == 43) {
-    	        CFMValue = (mLastLapSpeed != null) ? 3.6*mLastLapSpeed*1000/unitP : 0;
-        	    CFMLabel = "LL Spd";
-            	CFMFormat = "2decimal";
-			} else if (uClockFieldMetric == 44) {
-	            CFMValue = (info.averageSpeed != null) ? 3.6*info.averageSpeed*1000/unitP : 0;
-    	        CFMLabel = "Avg Spd";
-        	    CFMFormat = "2decimal";
 			} else if (uClockFieldMetric == 47) {
     	        CFMValue = LapHeartrate;
         	    CFMLabel = "Lap HR";
@@ -523,7 +503,7 @@ class ExtramemView extends DatarunpremiumView {
     	    mZ10under = mZ10under.toNumber();
         	mZ10upper = mZ10upper.toNumber(); 
 
-		  if (info.currentPower != null) {
+		    if (info.currentPower != null) {
                 if (testvalue >= mZ10upper) {
                     mfillColour = Graphics.COLOR_BLACK;        //! (aboveZ10)
                     mZone[counter] = 11;
@@ -566,7 +546,7 @@ class ExtramemView extends DatarunpremiumView {
 		}
 
 		if (metric[counter] == 20 or metric[counter] == 21 or metric[counter] == 22 or metric[counter] == 23 or metric[counter] == 24 or metric[counter] == 37 or metric[counter] == 38) {
-			Powerzone = mZone[counter];
+			Powerzone = mZone[counter]; 
 		}
 		if (metric[counter] == 45 or metric[counter] == 46 or metric[counter] == 47 or metric[counter] == 48 or metric[counter] == 49) {		
 			HRzone = mZone[counter];

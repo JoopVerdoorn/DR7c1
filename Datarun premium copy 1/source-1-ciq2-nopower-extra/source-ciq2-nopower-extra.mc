@@ -1,7 +1,10 @@
 class CiqView extends ExtramemView {	
 	hidden var mETA							= 0;
 	hidden var uETAfromLap 					= true;
-	
+	hidden var uWorkoutType = 0;	
+	var nextAlertT = 0;
+	var nextAlertD = 0;
+	var jDistance = 0;
     function initialize() {
         ExtramemView.initialize();		
     }
