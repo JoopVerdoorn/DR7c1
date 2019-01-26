@@ -24,7 +24,6 @@
     <property id="pPowerZones" type="string">184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</property>
     <property id="pWorkoutType" type="number">0</property>
     <property id="pWorkoutAzones" type="string">100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150</property>
-    <property id="pWorkoutRzones" type="string">0300t100-190 ; 8x(0120d240-260 ; 0060t190-210) ; 0900t100-190</property>
     <property id="pWorkoutzones" type="string">0300t100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0300t100-190</property>
     <property id="pMilClockAltern" type="number">0</property>
     <property id="prolavPacmaxsecs" type="number">30</property> 
@@ -152,14 +151,12 @@
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
     <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369 (not for FR645m)</string>
-    <string id="lWorkoutType">BETA FUNTIONALITY Select workout type, for power alerts during workout (not for FR645m)</string>
+    <string id="lWorkoutType">Select workout type, for power alerts during workout (not for FR645m)</string>
     <string id="lWorkoutTypeNone">No workout</string>
     <string id="lWorkoutTypeAlerts">NOT YET WORKING Workout created in Garmin Connect with max 18 steps, Datarun delivers alerts for power zones (not for FR645m)</string>
-    <string id="lWorkoutTypeRepeats">BETA FUNTIONALITY Workout with max 8 repeats+warm-up+cool-down, created within Datarun, times and zones (not for FR645m)</string>
     <string id="lWorkoutType10Steps">BETA FUNTIONALITY Workout based on times and zones with max 18 steps, created within Datarun (not for FR645m)</string>
     <string id="lWorkoutAzones">NOT YET WORKING Powerzones for workout created in Garmin Connect with max 18 steps, a format required like 100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150 (not for FR645m)</string>
-    <string id="lWorkoutRzones">BETA FUNTIONALITY Distances/times and powerzones for a workout with max 8 repeats+warm-up+cool-down, a format required like 0300t100-190 ; 8x(0120d240-260 ; 0060t190-210) ; 0900t100-190 (not for FR645m)</string>
-    <string id="lWorkoutzones">BETA FUNTIONALITY Distances/times and powerzones for a workout with max 18 steps, a format required like 0300t100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0300t100-190 (not for FR645m)</string>
+    <string id="lWorkoutzones">Powerzones for a workout fully created in Datarun premium string workout creator spreadsheet (not for FR645m)</string>
     <string id="l10Powerzones">Use 10 power zones  instead of 5 (not for FR645m)</string>
     <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480 (not for FR645m)</string>
 	<string id="lCEFactor">Current efficiency Index (not for FR645m)</string>
@@ -222,16 +219,12 @@
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lWorkoutTypeNone</listEntry>
         <listEntry value="1">@Strings.lWorkoutTypeAlerts</listEntry>
-        <listEntry value="2">@Strings.lWorkoutTypeRepeats</listEntry>
-        <listEntry value="3">@Strings.lWorkoutType10Steps</listEntry>
+        <listEntry value="2">@Strings.lWorkoutType10Steps</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pWorkoutAzones" title="@Strings.lWorkoutAzones">
       <settingConfig type="alphaNumeric"  required="true"/>
-    </setting>    
-    <setting propertyKey="@Properties.pWorkoutRzones" title="@Strings.lWorkoutRzones">
-      <settingConfig type="alphaNumeric"  required="true"/>
-    </setting>    
+    </setting>       
     <setting propertyKey="@Properties.pWorkoutzones" title="@Strings.lWorkoutzones">
       <settingConfig type="alphaNumeric"  required="true"/>
     </setting>    
