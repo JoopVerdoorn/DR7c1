@@ -56,6 +56,7 @@
 	<string id="lSPowerMenu">___Power items___</string>
 	<string id="lPIMenu">___Performance indicator items___</string>
 	<string id="lAltitudeMenu">___Altitude items___</string>
+	<string id="lWorkoutMenu">___Workout items___</string>
     <string id="lTimerDisplay">Timer field</string>
     <string id="lTimerTimer">Timer</string>
     <string id="lTimerLap">Current lap time</string>
@@ -139,7 +140,10 @@
 	<string id="lLEFactor">Current lap efficiency factor</string>
 	<string id="lLEIndex">Current lap efficiency Index (not for FR645m)</string>
 	<string id="lLLEFactor">Last lap average efficiency factor</string>
-	<string id="lLLEIndex">Last lap efficiency Index (not for FR645m)</string>
+	<string id="lLLEIndex">Last lap efficiency Index (not for FR645m)</string>	
+	<string id="lTimeToNextStep">Time to next workout step, created in spreadheet (not for FR645m)</string>
+	<string id="lDistanceToNextStep">Distance to next workout step, created in spreadheet (not for FR645m)</string>
+	<string id="lPowerTargetThisStep">Powertarget for current workout step (not for FR645m)</string>	
     <string id="lSPower">Current running power</string>
     <string id="lFilteredCurPower">Current running power, filtered for spikes above 2000 Watt (not for FR645m)</string>
     <string id="lAsecPower">Power averaged over the last 3 seconds</string>
@@ -154,7 +158,7 @@
     <string id="lWorkoutType">Select workout type, for power alerts during workout (not for FR645m)</string>
     <string id="lWorkoutTypeNone">No workout</string>
     <string id="lWorkoutTypeAlerts">NOT YET WORKING Workout created in Garmin Connect with max 18 steps, Datarun delivers alerts for power zones (not for FR645m)</string>
-    <string id="lWorkoutType10Steps">BETA FUNTIONALITY Workout based on times and zones with max 18 steps, created within Datarun (not for FR645m)</string>
+    <string id="lWorkoutType18Steps">Workout based on times and zones with max 18 steps, created within Datarun (not for FR645m)</string>
     <string id="lWorkoutAzones">NOT YET WORKING Powerzones for workout created in Garmin Connect with max 18 steps, a format required like 100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150 (not for FR645m)</string>
     <string id="lWorkoutzones">Powerzones for a workout fully created in Datarun premium string workout creator spreadsheet (not for FR645m)</string>
     <string id="l10Powerzones">Use 10 power zones  instead of 5 (not for FR645m)</string>
@@ -219,7 +223,7 @@
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lWorkoutTypeNone</listEntry>
         <listEntry value="1">@Strings.lWorkoutTypeAlerts</listEntry>
-        <listEntry value="2">@Strings.lWorkoutType10Steps</listEntry>
+        <listEntry value="2">@Strings.lWorkoutType18Steps</listEntry>
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pWorkoutAzones" title="@Strings.lWorkoutAzones">
@@ -334,6 +338,12 @@
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>
+        
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="64">@Strings.lTimeToNextStep</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+        
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pUpperRightMetric" title="@Strings.lUpperRightMetric">
@@ -416,7 +426,15 @@
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
-        <listEntry value="53">@Strings.lElevationLoss</listEntry>      </settingConfig>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>      
+
+        
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="64">@Strings.lTimeToNextStep</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+
+       </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.pMiddleLeftMetric" title="@Strings.lMiddleLeftMetric">
@@ -491,6 +509,11 @@
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>      
+        
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+
         </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pMiddleMiddleMetric" title="@Strings.lMiddleMiddleMetric">
@@ -566,6 +589,10 @@
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>      
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pMiddleRightMetric" title="@Strings.lMiddleRightMetric">
@@ -641,6 +668,10 @@
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
         <listEntry value="53">@Strings.lElevationLoss</listEntry>      
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+
       </settingConfig>
     </setting>
     
@@ -724,7 +755,14 @@
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
-        <listEntry value="53">@Strings.lElevationLoss</listEntry>      </settingConfig>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+       
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="64">@Strings.lTimeToNextStep</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+
+        </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pBottomRightMetric" title="@Strings.lBottomRightMetric">
       <settingConfig type="list" required="true">
@@ -806,7 +844,14 @@
         <listEntry value="998">@Strings.lAltitudeMenu</listEntry>
         <listEntry value="51">@Strings.lAltitude</listEntry>
         <listEntry value="52">@Strings.lElevationGain</listEntry>
-        <listEntry value="53">@Strings.lElevationLoss</listEntry>       </settingConfig>
+        <listEntry value="53">@Strings.lElevationLoss</listEntry>
+        
+        <listEntry value="999">@Strings.lWorkoutMenu</listEntry>
+        <listEntry value="64">@Strings.lTimeToNextStep</listEntry>
+        <listEntry value="65">@Strings.lDistanceToNextStep</listEntry>
+        <listEntry value="66">@Strings.lPowerTargetThisStep</listEntry>        
+        
+        </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pClockFieldMetric" title="@Strings.lClockFieldMetric">
       <settingConfig type="list" required="true">
@@ -856,7 +901,7 @@
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
-        <listEntry value="54">@Strings.lTEffect</listEntry>
+        <listEntry value="54">@Strings.lTEffect</listEntry>       
 
       </settingConfig>
     </setting>
