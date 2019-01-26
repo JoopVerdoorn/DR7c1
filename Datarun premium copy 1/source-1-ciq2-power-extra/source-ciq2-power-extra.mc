@@ -256,7 +256,7 @@ System.println( "i is " + i);
 			} else if (jTimertime > 0){  //! timer is running
 				setPowerWarning = 0;
 				//! Executing alerts
-				if (mWorkoutstepNumber < 19) {
+				if (mWorkoutstepNumber < 18) {
 				  if (runPower > mWorkoutHzone[mWorkoutstepNumber].toNumber() or runPower < mWorkoutLzone[mWorkoutstepNumber].toNumber()) {		 
 					 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
 					 	vibrateseconds = vibrateseconds + 1;	 		  			
@@ -283,7 +283,7 @@ System.println( "i is " + i);
 				  } 
 				}		
 				workoutUnit = (mWorkoutType[mWorkoutstepNumber+1].equals("t")) ? "sec" : "met";
-				mWorkoutstepNumber = (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false) ? mWorkoutstepNumber : 18;
+				mWorkoutstepNumber = (mWorkoutAmount[mWorkoutstepNumber+1].equals("0000") == false) ? mWorkoutstepNumber : 18;
 				if (nextAlertType.equals("t")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
 					  if (mWorkoutstepNumber < 18) {
@@ -363,7 +363,7 @@ System.println("einde");
 	        if (metric[i] == 38) {
     	        fieldValue[i] =  (info.currentPower != null) ? info.currentPower : 0;     	        
         	    fieldLabel[i] = "P zone";
-            	fieldFormat[i] = "0decimal";
+            	fieldFormat[i] = "1decimal";
 			} else if (metric[i] == 56) {
 	            fieldValue[i] = FilteredCurPower;
     	        fieldLabel[i] = "Filt Pwr";
@@ -468,6 +468,9 @@ System.println("einde");
 		
         if ( fieldformat.equals("0decimal" ) == true ) {
         	fieldvalue = fieldvalue.format("%.0f");        	
+        } else if ( fieldformat.equals("1decimal" ) == true ) {
+            Temp = Math.round(fieldvalue*10)/10;
+			fieldvalue = Temp.format("%.1f");
         } else if ( fieldformat.equals("2decimal" ) == true ) {
             Temp = Math.round(fieldvalue*100)/100;
             var fString = "%.2f";
@@ -588,6 +591,7 @@ System.println("einde");
 		var vibrateData = [
 			new Attention.VibeProfile( 100, 100 )
 		];
+System.println(mWorkoutstepNumber);		
 		if (mWorkoutstepNumber < 18 ) {
 			if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false) { 
 				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  "Next step" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
@@ -597,7 +601,7 @@ System.println("einde");
 			Toybox.Attention.vibrate(vibrateData);
 			Attention.playTone(Attention.TONE_LOUD_BEEP);
 			Attention.playTone(Attention.TONE_KEY);
-		} else if (mWorkoutstepNumber == 18 ) {
+		} else if (mWorkoutstepNumber > 17 ) {
 			dc.drawText(120, 135, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 		}
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
