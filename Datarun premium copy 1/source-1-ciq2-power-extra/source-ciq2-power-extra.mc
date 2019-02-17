@@ -16,8 +16,7 @@ class CiqView extends ExtramemView {
 	var mIntensityFactor					= 0;
 	var mTTS								= 0;
 	var uWorkoutType						= 0;
-	var uWorkoutAzones						= "100-190 ; 240-260 ; 100-190 ; 260-280 ; 100-190 ; 280-300 ; 100-190 ; 300-320 ; 100-190 ; 320-340 ; 3100-190 ; 00-320 ; 100-190 ; 280-300 ; 100-190 ; 260-280 ; 100-190 ; 100-150";
-	var uWorkoutzones						= "0300s100-190 ; 0800d240-260 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d320-340 ; 0100d100-190 ; 0800d300-320 ; 0100d100-190 ; 0800d280-300 ; 0100d100-190 ; 0800d260-280 ; 0100d100-190 ; 0300s100-190";
+	var uWorkoutzones						= "0300t100-190;0800d240-260;0100d100-190;0800d260-280;0100d100-190;0800d280-300;0100d100-190;0800d300-320;0100d100-190;0800d320-340;0100d100-190;0800d300-320;0100d100-190;0800d280-300;0100d100-190;0800d260-280;0100d100-190;0300t100-190";
 	var mWorkoutAmount						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 	var mWorkoutType						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 	var mWorkoutLzone						= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -40,6 +39,7 @@ class CiqView extends ExtramemView {
 	var DistanceToNextStep					= 0;
 	var PowerTargetThisStep					= 0;
 	var TheEnd 								= false;
+	hidden var hideDiv 						= false;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -51,7 +51,6 @@ class CiqView extends ExtramemView {
 		uFTP		 	 = mApp.getProperty("pFTP");
 		uCP		 	 	 = mApp.getProperty("pCP");
 		uWorkoutType	 = mApp.getProperty("pWorkoutType");
-		uWorkoutAzones	 = mApp.getProperty("pWorkoutAzones");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
 		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
 		i = 0; 
@@ -184,19 +183,13 @@ class CiqView extends ExtramemView {
 		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
 
 		//!Workout variables setup
-		if (uWorkoutType == 1) { 					//! Set up alerts for workout created within Garmin Connect 
+		if (uWorkoutType == 2) { 			//! Set up powerbased workout with timers
 			i = 0; 
 	    	for (i = 1; i < 19; ++i) {			
-				mWorkoutLzone[i]	= uWorkoutAzones.substring(0+(i-1)*10, 3+(i-1)*10);
-				mWorkoutHzone[i]	= uWorkoutAzones.substring(4+(i-1)*10, 7+(i-1)*10);
-			}		
-		} else if (uWorkoutType == 2) { 			//! Set up powerbased workout with timers
-			i = 0; 
-	    	for (i = 1; i < 19; ++i) {			
-		    	mWorkoutAmount[i]	= uWorkoutzones.substring(0+(i-1)*15, 4+(i-1)*15);		    	
-		    	mWorkoutType[i]		= uWorkoutzones.substring(4+(i-1)*15, 5+(i-1)*15);		    	
-				mWorkoutLzone[i]	= uWorkoutzones.substring(5+(i-1)*15, 8+(i-1)*15);				
-				mWorkoutHzone[i]	= uWorkoutzones.substring(9+(i-1)*15, 12+(i-1)*15);
+		    	mWorkoutAmount[i]	= uWorkoutzones.substring(0+(i-1)*13, 4+(i-1)*13);		    	
+		    	mWorkoutType[i]		= uWorkoutzones.substring(4+(i-1)*13, 5+(i-1)*13);		    	
+				mWorkoutLzone[i]	= uWorkoutzones.substring(5+(i-1)*13, 8+(i-1)*13);				
+				mWorkoutHzone[i]	= uWorkoutzones.substring(9+(i-1)*13, 12+(i-1)*13);
 			}		
 		}
 
@@ -209,6 +202,7 @@ class CiqView extends ExtramemView {
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
 		if (uWorkoutType == 2) {
 			if (jTimertime == 0) {  //! Activity not yet started
+			hideDiv = true;
 				mWorkoutstepNumber = 1;
 				if (mWorkoutType[1].equals("t")) {
 					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " sec @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
@@ -262,8 +256,10 @@ class CiqView extends ExtramemView {
 				
 				workoutUnit = (mWorkoutType[mWorkoutstepNumber+1].equals("t")) ? "sec" : "met";
 				mWorkoutstepNumber = (mWorkoutAmount[mWorkoutstepNumber+1].equals("0000") == false) ? mWorkoutstepNumber : 18;
+				hideDiv = false;
 				if (nextAlertType.equals("t")) {
-					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 				 	
+					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 	
+					hideDiv = true;			 	
 					  if (mWorkoutstepNumber < 18) {
 						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " " + workoutUnit + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
@@ -278,7 +274,8 @@ class CiqView extends ExtramemView {
 					}
 				}			
 				if (nextAlertType.equals("d")) {
-					if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {       //! Notification nearing the end of a distance-based step 
+					if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {       //! Notification nearing the end of a distance-based step
+					hideDiv = true; 
 					  if (mWorkoutstepNumber < 18) {
 						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber+1].toNumber() + " " + workoutUnit + " @ " + mWorkoutLzone[mWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber+1].toNumber(), Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 						Toybox.Attention.vibrate(vibrateData);
@@ -576,6 +573,7 @@ class CiqView extends ExtramemView {
 			new Attention.VibeProfile( 100, 100 )
 		];
 
+		hideDiv = true;
 		if (mWorkoutstepNumber < 18 ) {
 			if (mWorkoutAmount[mWorkoutstepNumber].equals("0000") == false) { 
 				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  "Next step" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
