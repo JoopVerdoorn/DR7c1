@@ -180,7 +180,7 @@ class CiqView extends ExtramemView {
 
 		//! Calculate IF and TTS
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
-		mTTS = (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100;
+		mTTS = (uFTP != 0) ? (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100 : 999;
 
 		//!Workout variables setup
 		if (uWorkoutType == 2) { 			//! Set up powerbased workout with timers
@@ -247,7 +247,11 @@ class CiqView extends ExtramemView {
 				  } 
 				}		
 
-				TimeToNextStep = (mWorkoutType[mWorkoutstepNumber].equals("t")) ? (nextAlertT-jTimertime)*1000 : Math.round((nextAlertD-jDistance)/CurrentSpeedinmpersec).toNumber()*1000;
+				if (CurrentSpeedinmpersec != 0) {
+					TimeToNextStep = (mWorkoutType[mWorkoutstepNumber].equals("t")) ? (nextAlertT-jTimertime)*1000 : Math.round((nextAlertD-jDistance)/CurrentSpeedinmpersec).toNumber()*1000;
+				} else {
+					TimeToNextStep = 0;
+				}
 				DistanceToNextStep = (mWorkoutType[mWorkoutstepNumber].equals("t")) ? (nextAlertT-jTimertime)*CurrentSpeedinmpersec/1000 : (nextAlertD-jDistance);
 				PowerTargetThisStep = Math.round((mWorkoutLzone[mWorkoutstepNumber].toNumber() + mWorkoutHzone[mWorkoutstepNumber].toNumber())/2).toNumber();
 				TimeToNextStep = (TheEnd == true ) ? 0 : TimeToNextStep; 
