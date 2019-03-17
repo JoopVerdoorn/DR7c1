@@ -232,11 +232,11 @@ class CiqView extends ExtramemView {
 	}
 
 	//! Store last lap quantities and set lap markers after a step within a structured workout
-	function onWorkoutStepComplete(dc) {
-		if (uWorkoutType != 0) {
-			Workoutstepalert(dc);
-		}
-	}
+	//! function onWorkoutStepComplete(dc) {
+	//! 	if (uWorkoutType != 0) {
+	//! 		Workoutstepalert(dc);
+	//! 	}
+	//! }
 
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
