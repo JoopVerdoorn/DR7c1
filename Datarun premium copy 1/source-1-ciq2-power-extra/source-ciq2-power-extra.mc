@@ -228,15 +228,46 @@ class CiqView extends ExtramemView {
 
     //! Store last lap quantities and set lap markers after a lap
     function onTimerLap() {
-		Lapaction ();
+        var info = Activity.getActivityInfo();
+        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
+        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+        mLastLapTimeMarker      	= jTimertime;
+
+        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
+        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
+        mLastLapHeartrateMarker     = mElapsedHeartrate;
+        mLastLapTimeHRMarker        = mHeartrateTime;
+
+        mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
+        mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
+        mLastLapPowerMarker         = mElapsedPower;
+        mLastLapTimePwrMarker       = mPowerTime;        
+
+        mLaps++;
 	}
 
-	//! Store last lap quantities and set lap markers after a step within a structured workout
-	//! function onWorkoutStepComplete(dc) {
-	//! 	if (uWorkoutType != 0) {
-	//! 		Workoutstepalert(dc);
-	//! 	}
-	//! }
+
+	 //!Store last lap quantities and set lap markers after a step within a structured workout
+	 function onWorkoutStepComplete() {
+        var info = Activity.getActivityInfo();
+        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
+        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+        mLastLapTimeMarker      	= jTimertime;
+
+        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
+        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
+        mLastLapHeartrateMarker     = mElapsedHeartrate;
+        mLastLapTimeHRMarker        = mHeartrateTime;
+
+        mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
+        mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
+        mLastLapPowerMarker         = mElapsedPower;
+        mLastLapTimePwrMarker       = mPowerTime;        
+
+        mLaps++;
+	 }
 
 	function onUpdate(dc) {
 		//! call the parent onUpdate to do the base logic
@@ -576,25 +607,6 @@ class CiqView extends ExtramemView {
     	return val + (val >> 5);
 	}
 
-	function Lapaction () {
-        var info = Activity.getActivityInfo();
-        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
-        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
-        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
-        mLastLapTimeMarker      	= jTimertime;
-
-        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
-        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
-        mLastLapHeartrateMarker     = mElapsedHeartrate;
-        mLastLapTimeHRMarker        = mHeartrateTime;
-
-        mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
-        mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
-        mLastLapPowerMarker         = mElapsedPower;
-        mLastLapTimePwrMarker       = mPowerTime;        
-
-        mLaps++;	
-	}
 
 	function Workoutstepalert(dc) {
 		hideText = true;
