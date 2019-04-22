@@ -1,7 +1,7 @@
 <resources>
 
   <properties>
-    <property id="pAppversion" type="string">1.98</property>
+    <property id="pAppversion" type="string">1.99</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -35,6 +35,7 @@
     <property id="pFTP" type="number">250</property>
     <property id="pCP" type="number">250</property>
     <property id="pspikeTreshold" type="number">2000</property>
+    <property id="pLapPwr4alerts" type="boolean">false</property>
   </properties>
 
 	
@@ -44,8 +45,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">1.98</string>
-    <string id="lDummysetting4version">Version 1.98 of Datarun premium, copy 1 (dummy setting)</string>
+    <string id="AppVersion">1.99</string>
+    <string id="lDummysetting4version">Version 1.99 of Datarun premium, copy 1 (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -110,11 +111,12 @@
     <string id="lAveraHeartrate">Average heartrate</string>
 	<string id="lLapHeartrate">Current lap heartrate</string>
 	<string id="lLLHeartrate">Last lap heartrate</string>   
-	<string id="lFTP">Functional treshold power, needed for Intensity factor and Training stress score (not for FR645m)</string>
-	<string id="lCP">Critical power, needed for Running Stress Score (not for FR645m)</string>
-	<string id="lIntensityFactor">Intensity Factor (not for FR645m)</string>
-	<string id="lTTS">Training Stress Score (not for FR645m)</string>
-	<string id="lRSS">Running Stress Score (not for FR645m)</string>
+	<string id="lFTP">Functional treshold power, needed for Intensity factor and Training stress score </string>
+	<string id="lCP">Critical power, needed for Running Stress Score </string>
+	<string id="lIntensityFactor">Intensity Factor</string>
+	<string id="lTTS">Training Stress Score</string>
+	<string id="lRSS">Running Stress Score</string>
+	<string id="lLapPwr4alerts">Use lap power for alerts instead of current power</string>
     <string id="lRequiredPower">Boundaries for warning signal, a format required like (227:284)</string> 
     <string id="lWarningFreq">Frequency for the warning signal for operating out of powerzone</string>
     <string id="lAlertbeep">Play sound as warning signal for operating out of powerzone</string>   
@@ -136,39 +138,39 @@
 	<string id="lCadence">Cadence in steps per minute</string>
 	<string id="lRCadence">Cadence in rotations per minute (for bike use, only for FR645m, Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
 	<string id="lAEFactor">Average efficiency factor</string>
-	<string id="lAEIndex">Average efficiency Index (not for FR645m)</string>
+	<string id="lAEIndex">Average efficiency Index</string>
 	<string id="lLEFactor">Current lap efficiency factor</string>
-	<string id="lLEIndex">Current lap efficiency Index (not for FR645m)</string>
+	<string id="lLEIndex">Current lap efficiency Index</string>
 	<string id="lLLEFactor">Last lap average efficiency factor</string>
-	<string id="lLLEIndex">Last lap efficiency Index (not for FR645m)</string>	
-	<string id="lTimeToNextStep">Time to next workout step, created in spreadheet (not for FR645m)</string>
-	<string id="lDistanceToNextStep">Distance to next workout step, created in spreadheet (not for FR645m)</string>
-	<string id="lPowerTargetThisStep">Powertarget for current workout step (not for FR645m)</string>	
+	<string id="lLLEIndex">Last lap efficiency Index</string>	
+	<string id="lTimeToNextStep">Time to next workout step, created in spreadheet</string>
+	<string id="lDistanceToNextStep">Distance to next workout step, created in spreadheet</string>
+	<string id="lPowerTargetThisStep">Powertarget for current workout step</string>	
     <string id="lSPower">Current running power</string>
-    <string id="lFilteredCurPower">Current running power, filtered for spikes above 2000 Watt (not for FR645m)</string>
+    <string id="lFilteredCurPower">Current running power, filtered for spikes above 2000 Watt</string>
     <string id="lAsecPower">Power averaged over the last 3 seconds</string>
     <string id="lPowper300km">Power averaged over the last .. seconds</string>
     <string id="lrolavPowmaxsecs">Power averaged over the last ... seconds (max is 300 seconds, only for Fenix 5x, Fenix 5 plus series and D2 Charlie/Delta)</string>
     <string id="lrolavPowmaxsecsError">This needs to be a number from 2 too 300</string>
-    <string id="lNPower">Normalized power (not for FR645m)</string>
+    <string id="lNPower">Normalized power</string>
     <string id="lAPower">Average running power</string>
 	<string id="lLPower">Current lap running power</string>
 	<string id="lLLPower">Last lap running power</string>
-    <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369 (not for FR645m)</string>
-    <string id="lWorkoutType">Select workout type, for power alerts during workout (not for FR645m)</string>
+    <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</string>
+    <string id="lWorkoutType">Select workout type, for power alerts during workout</string>
     <string id="lWorkoutTypeNone">No workout</string>
     <string id="lWorkoutType18Steps">Workout based on times and zones with repeats or max 18 steps, created with the workout spreadsheet for Datarun (see the manual, not for FR645m)</string>
-    <string id="lWorkoutzones">Powerzones for a workout fully created in Datarun premium string workout creator spreadsheet (not for FR645m)</string>
-    <string id="l10Powerzones">Use 10 power zones  instead of 5 (not for FR645m)</string>
-    <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480 (not for FR645m)</string>
-	<string id="lCEFactor">Current efficiency Index (not for FR645m)</string>
+    <string id="lWorkoutzones">Powerzones for a workout fully created in Datarun premium string workout creator spreadsheet</string>
+    <string id="l10Powerzones">Use 10 power zones  instead of 5</string>
+    <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</string>
+	<string id="lCEFactor">Current efficiency Index</string>
 	<string id="lCEIndex">Current lap efficiency factor</string>
-    <string id="lCP2HRratio">Current power to heartrate ratio (not for FR645m)</string>
-    <string id="lLP2HRratio">Lap power to heartrate ratio (not for FR645m)</string>
-    <string id="lLLP2HRratio">Last lap power to heartrate ratio (not for FR645m)</string>
-    <string id="lAP2HRratio">Average power to heartrate ratio (not for FR645m)</string>
-	<string id="lSPowerzone">Current powerzone (not for FR645m)</string>
-	<string id="lspikeTreshold">Treshhold value for supressing power spikes (not for FR645m)</string>
+    <string id="lCP2HRratio">Current power to heartrate ratio</string>
+    <string id="lLP2HRratio">Lap power to heartrate ratio</string>
+    <string id="lLLP2HRratio">Last lap power to heartrate ratio</string>
+    <string id="lAP2HRratio">Average power to heartrate ratio</string>
+	<string id="lSPowerzone">Current powerzone</string>
+	<string id="lspikeTreshold">Treshhold value for supressing power spikes</string>
  </strings>
 
   <settings>
@@ -230,6 +232,9 @@
       <settingConfig type="numeric" />
     </setting>    
     <setting propertyKey="@Properties.pAlertbeep" title="@Strings.lAlertbeep">
+      <settingConfig type="boolean" required="true" />
+    </setting>
+    <setting propertyKey="@Properties.pLapPwr4alerts" title="@Strings.lLapPwr4alerts">
       <settingConfig type="boolean" required="true" />
     </setting>
     <setting propertyKey="@Properties.pRacedistance" title="@Strings.lRacedistanceTitle">

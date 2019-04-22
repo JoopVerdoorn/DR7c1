@@ -47,6 +47,7 @@ class CiqView extends ExtramemView {
 	var Temp; 
 	var fieldvalue;
 	var WU;
+	hidden var uLapPwr4alerts 				= false;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -60,6 +61,7 @@ class CiqView extends ExtramemView {
 		uWorkoutType	 = mApp.getProperty("pWorkoutType");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
 		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
+		uLapPwr4alerts    = mApp.getProperty("pLapPwr4alerts");
 		i = 0; 
 	    for (i = 1; i < 8; ++i) {		
 			if (metric[i] == 57 or metric[i] == 58 or metric[i] == 59) {
@@ -96,6 +98,11 @@ class CiqView extends ExtramemView {
 //!temporary solution for power spikes > spikeTreshold Watt 		
             runPower 		 = (info.currentPower != null) ? info.currentPower : 0;
             runPower 		 = (runPower > uspikeTreshold) ? lastsrunPower : runPower;
+		 	if ( uLapPwr4alerts == true ) {
+		    	runalertPower 	 = LapPower;
+		    } else {
+		    	runalertPower 	 = runPower;
+		    }
 			mElapsedPower    = mElapsedPower + runPower;
 			lastsrunPower 	 = runPower;
 			RSS 			 = (info.currentPower != null) ? RSS + 0.03 * Math.pow(((runPower+0.001)/uCP),3.5) : RSS; 			             
@@ -128,10 +135,10 @@ class CiqView extends ExtramemView {
 				setPowerWarning = 0;
 				//! Executing alerts
 				if (mWorkoutstepNumber < 18) {
-				  if (runPower > mWorkoutHzone[mWorkoutstepNumber].toNumber() or runPower < mWorkoutLzone[mWorkoutstepNumber].toNumber()) {		 
+				  if (runalertPower > mWorkoutHzone[mWorkoutstepNumber].toNumber() or runalertPower < mWorkoutLzone[mWorkoutstepNumber].toNumber()) {		 
 					 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
 					 	vibrateseconds = vibrateseconds + 1;	 		  			
-    					if (runPower>mWorkoutHzone[mWorkoutstepNumber].toNumber()) {
+    					if (runalertPower>mWorkoutHzone[mWorkoutstepNumber].toNumber()) {
     						setPowerWarning = 1;
     						if (vibrateseconds == uWarningFreq) {
     							Toybox.Attention.vibrate(vibrateData);
@@ -140,7 +147,7 @@ class CiqView extends ExtramemView {
 		    					}
     							vibrateseconds = 0;
     						}
-    					} else if (runPower<mWorkoutLzone[mWorkoutstepNumber].toNumber()){
+    					} else if (runalertPower<mWorkoutLzone[mWorkoutstepNumber].toNumber()){
     						setPowerWarning = 2;
     						if (vibrateseconds == uWarningFreq) {
     							if (uAlertbeep == true) {
