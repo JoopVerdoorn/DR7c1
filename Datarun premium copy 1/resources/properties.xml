@@ -159,7 +159,7 @@
     <string id="lPowerZones">Power zones, a format required like 184:Z1:227:Z2:255:Z3:284:Z4:326:Z5:369</string>
     <string id="lWorkoutType">Select workout type, for power alerts during workout</string>
     <string id="lWorkoutTypeNone">No workout</string>
-    <string id="lWorkoutType18Steps">Workout based on times and zones with repeats or max 18 steps, created with the workout spreadsheet for Datarun (see the manual, not for FR645m)</string>
+    <string id="lWorkoutType18Steps">Workout based on times and zones with repeats or max 18 steps, created with the workout spreadsheet for Datarun</string>
     <string id="lWorkoutzones">Powerzones for a workout fully created in Datarun premium string workout creator spreadsheet</string>
     <string id="l10Powerzones">Use 10 power zones  instead of 5</string>
     <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</string>
