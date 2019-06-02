@@ -13,8 +13,6 @@ class Datarunpremiumcopy1App extends Toybox.Application.AppBase {
 }
 
 class DatarunpremiumView extends Ui.DataField {
-	hidden var stats = Sys.getSystemStats();
-	hidden var pwr = stats.battery;
 	hidden var appversion = "1.00";
 
 	//!Get device info

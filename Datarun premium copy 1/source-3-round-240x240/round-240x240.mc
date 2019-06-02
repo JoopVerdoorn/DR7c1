@@ -1,4 +1,5 @@
 using Toybox.Graphics as Gfx;
+using Toybox.System as Sys;
 
 //! inherit from the view that contains the commonlogic
 class DeviceView extends PowerView {
@@ -41,9 +42,7 @@ class DeviceView extends PowerView {
 		}
 
         //! Bottom vertical divider
-        if (jTimertime != 0) {
-        	dc.drawLine(119, 156, 119, 219);
-        }
+        dc.drawLine(119, 156, 119, 219);
         
         //! Bottom horizontal divider
         dc.drawLine(53, 219, 187, 219);
@@ -76,7 +75,18 @@ class DeviceView extends PowerView {
        		}       	
 		}
 
+		if (jTimertime == 0) {
+        	var myTime = Toybox.System.getClockTime(); 
+	    	var strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
+	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
+		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+				dc.drawText(120, 160, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		    }
+		}
+
 		//! Bottom battery indicator
+	 	var stats = Sys.getSystemStats();
+		var pwr = stats.battery;
 		var mBattcolor = (pwr > 15) ? mColourFont : Graphics.COLOR_RED;
 		dc.setColor(mBattcolor, Graphics.COLOR_TRANSPARENT);
 		dc.fillRectangle(92, 222, 54, 15);

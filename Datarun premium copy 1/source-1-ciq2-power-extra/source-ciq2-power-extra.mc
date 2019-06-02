@@ -1,4 +1,5 @@
 using Toybox.Math;
+using Toybox.WatchUi as Ui;
 class CiqView extends ExtramemView {  
 	var mfillColour 						= Graphics.COLOR_LT_GRAY;
 	var counterPower 						= 0;
@@ -48,6 +49,7 @@ class CiqView extends ExtramemView {
 	var fieldvalue;
 	var WU;
 	hidden var uLapPwr4alerts 				= false;
+	var Garminfont = Ui.loadResource(Rez.Fonts.Garmin1);
 		
     function initialize() {
         ExtramemView.initialize();
@@ -68,6 +70,8 @@ class CiqView extends ExtramemView {
 				rolavPowmaxsecs = (rolavPowmaxsecs < 30) ? 30 : rolavPowmaxsecs;
 			}
 		}		
+		
+		Garminfont = (ID0 == 3624 or ID0 == 3588 or ID0 == 3762 or ID0 == 3761 or ID0 == 3757 or ID0 == 3758 or ID0 == 3759) ? Ui.loadResource(Rez.Fonts.Garmin1) : Graphics.FONT_NUMBER_MEDIUM;
 		
 		//!Workout variables setup
 		if (uWorkoutType == 2) { 			//! Set up powerbased workout with timers
@@ -611,12 +615,12 @@ class CiqView extends ExtramemView {
             		fTimer = (fieldvalue / 60 % 60).format("%02d") + ":" + fTimerSecs;  
         		}
         		if (hideText == false) {
-        			dc.drawText(xx, y, Graphics.FONT_NUMBER_MEDIUM, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        			dc.drawText(xx, y, Garminfont, fTimer, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         		}	
         	}
         } else {
         	if (hideText == false) {
-        		dc.drawText(x, y, Graphics.FONT_NUMBER_MEDIUM, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        		dc.drawText(x, y, Garminfont, fieldvalue, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         	}
         }        
         if (hideText == false) {
