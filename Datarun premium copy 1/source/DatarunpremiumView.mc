@@ -105,7 +105,9 @@ class DatarunpremiumView extends Ui.DataField {
 	hidden var LastLapHeartrate				= 0;
 	hidden var AverageHeartrate 			= 0; 
 	hidden var mLapElapsedDistance 			= 0;
-
+	hidden var NoLapEffect					= false;
+	
+	
     function initialize() {
          DataField.initialize();
 
@@ -126,6 +128,7 @@ class DatarunpremiumView extends Ui.DataField {
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
+         NoLapEffect 		 = true;
          var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
 	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {

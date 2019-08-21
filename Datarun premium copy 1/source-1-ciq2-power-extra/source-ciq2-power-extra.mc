@@ -242,23 +242,25 @@ class CiqView extends ExtramemView {
 
     //! Store last lap quantities and set lap markers after a lap
     function onTimerLap() {
-        var info = Activity.getActivityInfo();
-        mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
-        mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
-        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
-        mLastLapTimeMarker      	= jTimertime;
+        if (NoLapEffect == false) {
+	        var info = Activity.getActivityInfo();
+    	    mLastLapTimerTime       	= jTimertime - mLastLapTimeMarker;
+        	mLastLapElapsedDistance 	= (info.elapsedDistance != null) ? info.elapsedDistance - mLastLapDistMarker : 0;
+	        mLastLapDistMarker      	= (info.elapsedDistance != null) ? info.elapsedDistance : 0;
+    	    mLastLapTimeMarker      	= jTimertime;
+	
+	        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
+    	    mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
+        	mLastLapHeartrateMarker     = mElapsedHeartrate;
+	        mLastLapTimeHRMarker        = mHeartrateTime;
 
-        mLastLapTimerTimeHR			= mHeartrateTime - mLastLapTimeHRMarker;
-        mLastLapElapsedHeartrate 	= (info.currentHeartRate != null) ? mElapsedHeartrate - mLastLapHeartrateMarker : 0;
-        mLastLapHeartrateMarker     = mElapsedHeartrate;
-        mLastLapTimeHRMarker        = mHeartrateTime;
+    	    mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
+        	mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
+	        mLastLapPowerMarker         = mElapsedPower;
+    	    mLastLapTimePwrMarker       = mPowerTime;        
 
-        mLastLapTimerTimePwr		= mPowerTime - mLastLapTimePwrMarker;
-        mLastLapElapsedPower  		= (info.currentPower != null) ? mElapsedPower - mLastLapPowerMarker : 0;
-        mLastLapPowerMarker         = mElapsedPower;
-        mLastLapTimePwrMarker       = mPowerTime;        
-
-        mLaps++;
+	        mLaps++;
+	    }
 	}
 
 

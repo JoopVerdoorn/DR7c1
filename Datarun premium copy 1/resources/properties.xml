@@ -3,7 +3,7 @@
     	<font id="Garmin1" filename="fonts/Roadway53-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.04</property>
+    <property id="pAppversion" type="string">2.08b</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -38,6 +38,7 @@
     <property id="pCP" type="number">250</property>
     <property id="pspikeTreshold" type="number">2000</property>
     <property id="pLapPwr4alerts" type="boolean">false</property>
+    <property id="pNoLapEffect" type="boolean">false</property>
   </properties>
 
 	
@@ -47,8 +48,8 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">2.04</string>
-    <string id="lDummysetting4version">Version 2.04 of Datarun premium, copy 1 (dummy setting)</string>
+    <string id="AppVersion">2.08b</string>
+    <string id="lDummysetting4version">Version 2.08b of Datarun premium, copy 1 (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
 	<string id="lPaceMenu">___Pace items___</string>
@@ -173,6 +174,7 @@
     <string id="lAP2HRratio">Average power to heartrate ratio</string>
 	<string id="lSPowerzone">Current powerzone</string>
 	<string id="lspikeTreshold">Treshhold value for supressing power spikes</string>
+	<string id="lNoLapEffect">Disable the effect of a manual lap or an Autolap on displayed lap values</string>
  </strings>
 
   <settings>
@@ -221,7 +223,10 @@
     <setting propertyKey="@Properties.pRequiredPower" title="@Strings.lRequiredPower">
       <settingConfig type="alphaNumeric"  required="true"/>
     </setting>
-	<setting propertyKey="@Properties.pWorkoutType" title="@Strings.lWorkoutType">
+    <setting propertyKey="@Properties.pNoLapEffect" title="@Strings.lNoLapEffect">
+      <settingConfig type="boolean" required="false" />
+    </setting>
+    <setting propertyKey="@Properties.pWorkoutType" title="@Strings.lWorkoutType">
       <settingConfig type="list" required="true">
         <listEntry value="0">@Strings.lWorkoutTypeNone</listEntry>
         <listEntry value="2">@Strings.lWorkoutType18Steps</listEntry>
