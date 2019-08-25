@@ -128,7 +128,7 @@ class DatarunpremiumView extends Ui.DataField {
          uRacedistance		 = mApp.getProperty("pRacedistance");
          uRacetime			 = mApp.getProperty("pRacetime");
          appversion 		 = mApp.getProperty("pAppversion");
-         NoLapEffect 		 = true;
+         NoLapEffect 		 = mApp.getProperty("pNoLapEffect");
          var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
 	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
