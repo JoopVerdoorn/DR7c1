@@ -97,8 +97,7 @@ class PowerView extends CiqView {
 		
 		//!var DisplayPower  = (info.currentPower != null) ? info.currentPower : 0;
 		PowerWarning = 0;
-		if (runalertPower>mPowerWarningupper or runalertPower<mPowerWarningunder) {
-			 //!Toybox.Attention.playTone(TONE_LOUD_BEEP);		 
+		if (runalertPower>mPowerWarningupper or runalertPower<mPowerWarningunder) {		 
 			 if (Toybox.Attention has :vibrate && uNoAlerts == false) {
 			 	vibrateseconds = vibrateseconds + 1;	 		  			
     			if (runalertPower>mPowerWarningupper) {
@@ -106,7 +105,7 @@ class PowerView extends CiqView {
     				if (vibrateseconds == uWarningFreq) {
     					Toybox.Attention.vibrate(vibrateData);
     					if (uAlertbeep == true) {
-    						Attention.playTone(Attention.TONE_LOW_BATTERY);
+    						Attention.playTone(Attention.TONE_ALERT_HI);
     					}
     					vibrateseconds = 0;
     				}
@@ -115,7 +114,7 @@ class PowerView extends CiqView {
     				if (vibrateseconds == uWarningFreq) {
     					
     						if (uAlertbeep == true) {
-    							Attention.playTone(Attention.TONE_LOUD_BEEP);
+    							Attention.playTone(Attention.TONE_ALERT_LO);
     						}
     					Toybox.Attention.vibrate(vibrateData);
     					vibrateseconds = 0;

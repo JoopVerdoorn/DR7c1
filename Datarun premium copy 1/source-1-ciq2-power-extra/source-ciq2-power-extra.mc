@@ -62,7 +62,6 @@ class CiqView extends ExtramemView {
 		uCP		 	 	 = mApp.getProperty("pCP");
 		uWorkoutType	 = mApp.getProperty("pWorkoutType");
 		uWorkoutzones	 = mApp.getProperty("pWorkoutzones");
-		uspikeTreshold	 = mApp.getProperty("pspikeTreshold");
 		uLapPwr4alerts    = mApp.getProperty("pLapPwr4alerts");
 		i = 0; 
 	    for (i = 1; i < 8; ++i) {		
@@ -99,9 +98,7 @@ class CiqView extends ExtramemView {
            	mElapsedHeartrate= (info.currentHeartRate != null) ? mElapsedHeartrate + info.currentHeartRate : mElapsedHeartrate;
             //!Calculate lappower
             mPowerTime		 = (info.currentPower != null) ? mPowerTime+1 : mPowerTime;
-//!temporary solution for power spikes > spikeTreshold Watt 		
             runPower 		 = (info.currentPower != null) ? info.currentPower : 0;
-            runPower 		 = (runPower > uspikeTreshold) ? lastsrunPower : runPower;
 		 	if ( uLapPwr4alerts == true ) {
 		    	runalertPower 	 = LapPower;
 		    } else {
@@ -147,7 +144,7 @@ class CiqView extends ExtramemView {
     						if (vibrateseconds == uWarningFreq) {
     							Toybox.Attention.vibrate(vibrateData);
     							if (uAlertbeep == true) {
-    								Attention.playTone(Attention.TONE_KEY);
+    								Attention.playTone(Attention.TONE_ALERT_HI);
 		    					}
     							vibrateseconds = 0;
     						}
@@ -155,7 +152,7 @@ class CiqView extends ExtramemView {
     						setPowerWarning = 2;
     						if (vibrateseconds == uWarningFreq) {
     							if (uAlertbeep == true) {
-    								Attention.playTone(Attention.TONE_LOUD_BEEP);
+    								Attention.playTone(Attention.TONE_ALERT_LO);
 	    						}
     						Toybox.Attention.vibrate(vibrateData);
     						vibrateseconds = 0;
@@ -170,14 +167,20 @@ class CiqView extends ExtramemView {
 				} else {
 					TimeToNextStep = 0;
 				}
-				DistanceToNextStep = (mWorkoutType[mWorkoutstepNumber].equals("t")) ? (nextAlertT-jTimertime)*CurrentSpeedinmpersec/1000 : (nextAlertD-jDistance);
+				DistanceToNextStep = (mWorkoutType[mWorkoutstepNumber].equals("t")) ? (nextAlertT-jTimertime)*CurrentSpeedinmpersec : (nextAlertD-jDistance);
 				PowerTargetThisStep = Math.round((mWorkoutLzone[mWorkoutstepNumber].toNumber() + mWorkoutHzone[mWorkoutstepNumber].toNumber())/2).toNumber();
 				TimeToNextStep = (TheEnd == true ) ? 0 : TimeToNextStep; 
 				DistanceToNextStep = (TheEnd == true ) ? 0 : DistanceToNextStep; 
 				PowerTargetThisStep = (TheEnd == true ) ? 0 : PowerTargetThisStep; 
 				
 				workoutUnit = (mWorkoutType[mWorkoutstepNumber+1].equals("t")) ? "sec" : "met";
-				mWorkoutstepNumber = (mWorkoutAmount[mWorkoutstepNumber+1].equals("0000") == false) ? mWorkoutstepNumber : 18;
+				if (mWorkoutAmount[mWorkoutstepNumber+1].equals("0000") == false) {
+					mWorkoutstepNumber = mWorkoutstepNumber;
+				} else {
+					if (TimeToNextStep < 2) {
+						mWorkoutstepNumber = 18;
+					}
+				}
 				if (nextAlertType.equals("t")) {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 	
 					  if (mWorkoutstepNumber < 18) {				
@@ -325,8 +328,6 @@ class CiqView extends ExtramemView {
 		}
 		counterPower = counterPower + 1;
 		rollingPwrValue [rolavPowmaxsecs+1] = (info.currentPower != null) ? info.currentPower : 0;
-//!temporary solution for power spikes > spikeTreshold Wat 		
-		rollingPwrValue [rolavPowmaxsecs+1] = (rollingPwrValue [rolavPowmaxsecs+1] > uspikeTreshold) ? rollingPwrValue [rolavPowmaxsecs] : rollingPwrValue [rolavPowmaxsecs+1];
 		FilteredCurPower = rollingPwrValue [rolavPowmaxsecs+1]; 
 		for (var i = 1; i < rolavPowmaxsecs+1; ++i) {
 			rollingPwrValue[i] = rollingPwrValue[i+1];
@@ -424,10 +425,12 @@ class CiqView extends ExtramemView {
 				}	
 				if (jTimertime == oldnextAlertT and nextAlertType.equals("t")) {			//! Setting up next alert at the end of a time-based step
 						Workoutstepalert(dc);
+						onWorkoutStepComplete();
 				}
 				if ( jDistance > oldnextAlertD and nextAlertType.equals("d")) {			//! Setting up next alert at the end of a distance-based step			 
 					if (oldnextAlertD < jDistance + CurrentSpeedinmpersec) {
 						Workoutstepalert(dc);
+						onWorkoutStepComplete();
 					}  
 				}		
 			}			
