@@ -34,7 +34,6 @@ class CiqView extends ExtramemView {
 	var i 									= 0;
 	var hideText 							= false;
 	var jDistance 							= 0;
-	var uspikeTreshold						= 2000;
 	var runPower							= 0;
 	var lastsrunPower						= 0;
 	var sethideText 						= false;
@@ -60,6 +59,8 @@ class CiqView extends ExtramemView {
     var Power8 									= 0;
     var Power9 									= 0;
     var Power10									= 0;
+    var redTextwidthDisplay						=120;
+	var redTextheightDisplay					=135;
 		
     function initialize() {
         ExtramemView.initialize();
@@ -87,7 +88,15 @@ class CiqView extends ExtramemView {
 		} else if (ID0 == 3802 or ID0 == 4027 ) {
 			Garminfont = Ui.loadResource(Rez.Fonts.Garmin3);
 		}
-		
+
+		if (ID0 == 3801 or ID0 == 4026 ) {  //! Fenix 6 pro red notification text geometrie
+			redTextwidthDisplay=130;
+			redTextheightDisplay=146;
+		} else if (ID0 == 3802 or ID0 == 4027 ) {     //! Fenix 6x pro red notification text geometrie
+			redTextwidthDisplay=140;
+			redTextheightDisplay=158;
+		}
+				
 		//!Workout variables setup
 		if (uWorkoutType == 2) { 			//! Set up powerbased workout with timers
 			i = 0; 
@@ -416,7 +425,7 @@ class CiqView extends ExtramemView {
 		//! Calculate IF and TTS
 		mIntensityFactor = (uFTP != 0) ? mNormalizedPow / uFTP : 0;
 		mTTS = (uFTP != 0) ? (jTimertime * mNormalizedPow * mIntensityFactor)/(uFTP * 3600) * 100 : 999;
-
+		
 		hideDiv = false;	
 		dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
 		if (uWorkoutType == 2) {
@@ -425,9 +434,9 @@ class CiqView extends ExtramemView {
     	    	Temp = (mWorkoutAmount[mWorkoutstepNumber].toNumber() != 0 ) ? (mWorkoutAmount[mWorkoutstepNumber].toNumber()).toLong() : 0;
         		fieldvalue =(Temp /3600 % 60).format("%02d") + ":" +  (Temp /60 % 60).format("%02d") + ":" + (Temp % 60).format("%02d");			
 				if (mWorkoutType[1].equals("t")) {
-					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  fieldvalue + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
+					dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  fieldvalue + " @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
 				} else if (mWorkoutType[1].equals("d")) {
-					dc.drawText(120, 135, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
+					dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  mWorkoutAmount[mWorkoutstepNumber].toNumber() + " met @ " + mWorkoutLzone[mWorkoutstepNumber].toNumber() + "-" + mWorkoutHzone[mWorkoutstepNumber].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);	
 				}
 			} else if (jTimertime > 0){ 		
 				if (oldnextAlertType.equals("t")) {
@@ -442,10 +451,10 @@ class CiqView extends ExtramemView {
         					fieldvalue = mWorkoutAmount[oldmWorkoutstepNumber+1].toNumber();
         					WU = " " + workoutUnit;
         				}
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  fieldvalue + WU + " @ " + mWorkoutLzone[oldmWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[oldmWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+						dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  fieldvalue + WU + " @ " + mWorkoutLzone[oldmWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[oldmWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 					  } else if (oldmWorkoutstepNumber == 18) {
 					    hideDiv = true;	
-					    dc.drawText(120, 135, Graphics.FONT_MEDIUM,  "Ending" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+					    dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  "Ending" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 					  }
 					}
 				}			
@@ -461,10 +470,10 @@ class CiqView extends ExtramemView {
         					fieldvalue = mWorkoutAmount[oldmWorkoutstepNumber+1].toNumber();
         					WU = " " + workoutUnit;
         				}
-						dc.drawText(120, 135, Graphics.FONT_MEDIUM,  fieldvalue + WU + " @ " + mWorkoutLzone[oldmWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[oldmWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+						dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  fieldvalue + WU + " @ " + mWorkoutLzone[oldmWorkoutstepNumber+1].toNumber() + "-" + mWorkoutHzone[oldmWorkoutstepNumber+1].toNumber() , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 					  } else if (oldmWorkoutstepNumber == 18){
 					    hideDiv = true;	
-					    dc.drawText(120, 135, Graphics.FONT_MEDIUM,  "Ending" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
+					    dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  "Ending" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);				
 					  }
 					}
 				}	
@@ -745,15 +754,15 @@ class CiqView extends ExtramemView {
 		hideDiv = true;
 		if (oldmWorkoutstepNumber < 18 ) {
 			if (mWorkoutAmount[oldmWorkoutstepNumber].equals("0000") == false) { 
-				dc.drawText(120, 135, Graphics.FONT_MEDIUM,  "Next step" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,  "Next step" , Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			} else { 
-				dc.drawText(120, 135, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
 			Toybox.Attention.vibrate(vibrateData);
 			Attention.playTone(Attention.TONE_LOUD_BEEP);
 			Attention.playTone(Attention.TONE_KEY);
 		} else if (oldmWorkoutstepNumber > 17 ) {
-			dc.drawText(120, 135, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			TheEnd = true;
 		}
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);

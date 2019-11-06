@@ -38,8 +38,10 @@ class DeviceView extends PowerView {
         dc.drawLine(139, 34,  139, 107);
 
         //! Centre vertical dividers
-        dc.drawLine(85,  107,  85,  182);
-        dc.drawLine(191, 107,  191, 182);
+        if (hideDiv == false) {
+	        dc.drawLine(85,  107,  85,  182);
+    	    dc.drawLine(191, 107,  191, 182);
+    	}
 
         //! Bottom vertical divider
         dc.drawLine(139, 182, 139, 256);
