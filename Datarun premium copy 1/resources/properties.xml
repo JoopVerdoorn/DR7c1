@@ -5,7 +5,7 @@
     	<font id="Garmin3" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.20b</property>
+    <property id="pAppversion" type="string">2.20c</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -56,7 +56,7 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">2.20b</string>
+    <string id="AppVersion">2.20c</string>
     <string id="lDummysetting4version">Version 2.20 of Datarun premium, copy 1 (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
@@ -1031,8 +1031,8 @@
         
         <listEntry value="992">@Strings.lPaceMenu</listEntry>
         <listEntry value="8">@Strings.lCurrentPace</listEntry>
-        <listEntry value="55">@Strings.lPaceper100m</listEntry>  
-        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>      
+        <listEntry value="55">@Strings.lPaceper100m</listEntry>   
+        <listEntry value="88">@Strings.lLLPaceper100m</listEntry>     
         <listEntry value="16">@Strings.lPaceper3km</listEntry>
         <listEntry value="9">@Strings.lPaceper5km</listEntry>
         <listEntry value="17">@Strings.lPaceper300km</listEntry>
@@ -1077,8 +1077,8 @@
         <listEntry value="28">@Strings.lLEFactor</listEntry>
         <listEntry value="29">@Strings.lLLEFactor</listEntry>
         <listEntry value="30">@Strings.lAEFactor</listEntry>
-        <listEntry value="54">@Strings.lTEffect</listEntry>   
-        <listEntry value="87">@Strings.lkCalories</listEntry>    
+        <listEntry value="54">@Strings.lTEffect</listEntry>  
+        <listEntry value="87">@Strings.lkCalories</listEntry>   
       </settingConfig>
     </setting>
     <setting propertyKey="@Properties.pdisablelabel1" title="@Strings.ldisablelabel1">

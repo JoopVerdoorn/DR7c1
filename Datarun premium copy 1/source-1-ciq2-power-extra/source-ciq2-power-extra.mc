@@ -210,12 +210,12 @@ class CiqView extends ExtramemView {
 					if (nextAlertT > jTimertime+5 and nextAlertT < jTimertime+10) {      //! Notification nearing the end of a time-based step 	
 					  if (mWorkoutstepNumber < 18) {				
 						Toybox.Attention.vibrate(vibrateData);
-						Attention.playTone(Attention.TONE_LOUD_BEEP);
-						Attention.playTone(Attention.TONE_KEY);
+						Attention.playTone(Attention.TONE_ALERT_LO);
+						Attention.playTone(Attention.TONE_ALERT_HI);
 					  } else if (mWorkoutstepNumber == 18) {				
 						Toybox.Attention.vibrate(vibrateData);
-						Attention.playTone(Attention.TONE_LOUD_BEEP);
-						Attention.playTone(Attention.TONE_KEY);
+						Attention.playTone(Attention.TONE_ALERT_LO);
+						Attention.playTone(Attention.TONE_ALERT_HI);
 					  }
 					}
 				}			
@@ -223,12 +223,12 @@ class CiqView extends ExtramemView {
 					if (nextAlertD > jDistance+5*CurrentSpeedinmpersec and nextAlertD < jDistance+10*CurrentSpeedinmpersec) {       //! Notification nearing the end of a distance-based step
 					  if (mWorkoutstepNumber < 18) {				
 						Toybox.Attention.vibrate(vibrateData);
-						Attention.playTone(Attention.TONE_LOUD_BEEP);
-						Attention.playTone(Attention.TONE_KEY);
+						Attention.playTone(Attention.TONE_ALERT_LO);
+						Attention.playTone(Attention.TONE_ALERT_HI);
 					  } else if (mWorkoutstepNumber == 18){				
 						Toybox.Attention.vibrate(vibrateData);
-						Attention.playTone(Attention.TONE_LOUD_BEEP);
-						Attention.playTone(Attention.TONE_KEY);
+						Attention.playTone(Attention.TONE_ALERT_LO);
+						Attention.playTone(Attention.TONE_ALERT_HI);
 					  }
 					}
 				 
@@ -759,8 +759,8 @@ class CiqView extends ExtramemView {
 				dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			}
 			Toybox.Attention.vibrate(vibrateData);
-			Attention.playTone(Attention.TONE_LOUD_BEEP);
-			Attention.playTone(Attention.TONE_KEY);
+			Attention.playTone(Attention.TONE_ALERT_LO);
+			Attention.playTone(Attention.TONE_ALERT_HI);
 		} else if (oldmWorkoutstepNumber > 17 ) {
 			dc.drawText(redTextwidthDisplay, redTextheightDisplay, Graphics.FONT_MEDIUM,"The end", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			TheEnd = true;
