@@ -5,7 +5,7 @@
     	<font id="Garmin3" filename="fonts/Roadway62-alleencijfers.fnt" antialias="true"/>
 	</fonts>
   <properties>
-    <property id="pAppversion" type="string">2.20e</property>
+    <property id="pAppversion" type="string">2.20f</property>
     <property id="pUpperLeftMetric" type="number">0</property>
     <property id="pUpperRightMetric" type="number">4</property>
     <property id="pMiddleLeftMetric" type="number">45</property>    
@@ -56,7 +56,7 @@
     <!-- Beta name:
     <string id="AppName">Datarun premium with 7 metrics, copy 1</string>
     -->
-    <string id="AppVersion">2.20e</string>
+    <string id="AppVersion">2.20f</string>
     <string id="lDummysetting4version">Version 2.20 of Datarun premium, copy 1 (dummy setting)</string>
 	<string id="lTimeMenu">___Time items___</string>
 	<string id="lDistanceMenu">___Distance items___</string>
@@ -177,7 +177,7 @@
     <string id="l10Powerzones">Use 10 power zones  instead of 5</string>
     <string id="lPPPowerZones">Power zones for 10 zone system, a format required like Power zones, a format required like 180:Z1:210:Z2:240:Z3:270:Z4:300:Z5:330:Z6:360:Z7:390:Z8:420:Z9:450:Z10:480</string>
 	<string id="lCEFactor">Current efficiency factor</string>
-	<string id="lCEIndex">Current lap efficiency index</string>
+	<string id="lCEIndex">Current efficiency index</string>
     <string id="lCP2HRratio">Current power to heartrate ratio</string>
     <string id="lLP2HRratio">Lap power to heartrate ratio</string>
     <string id="lLLP2HRratio">Last lap power to heartrate ratio</string>
