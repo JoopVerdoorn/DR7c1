@@ -1,31 +1,14 @@
 using Toybox.WatchUi as Ui;
-using Toybox.Application.Storage;
-using Toybox.Background;
-using Toybox.Communications;
-using Toybox.System;
 
 class Datarunpremiumcopy1App extends Toybox.Application.AppBase {
-    hidden var temp;
     function initialize() {
         AppBase.initialize();
     }
 
     //! Return the initial view of your application here
     function getInitialView() {
-        if(Toybox.System has :ServiceDelegate) {
-			Background.registerForTemporalEvent(new Time.Duration(5 * 60));
-		}
-   		return [ new DeviceView() ];
-	}
-
-	function onBackgroundData(data) {
-		temp=data;
-		Storage.setValue("mytemp", temp);	
-	}
-
-	function getServiceDelegate(){
-		return [new TempBgServiceDelegate()];
-	}
+        return [ new DeviceView() ];  
+    }
 }
 
 class DatarunpremiumView extends Ui.DataField {
@@ -126,7 +109,7 @@ class DatarunpremiumView extends Ui.DataField {
     	 metric[4] 		= mApp.getProperty("pMiddleMiddleMetric");    
     	 metric[5]		= mApp.getProperty("pMiddleRightMetric");
          metric[6]   	= mApp.getProperty("pBottomLeftMetric");
-         metric[7]  	= mApp.getProperty("pBottomRightMetric");     
+         metric[7]  	= mApp.getProperty("pBottomRightMetric");      
          uRoundedPace        = mApp.getProperty("pRoundedPace");
          uBacklight          = mApp.getProperty("pBacklight");
          umyNumber			 = mApp.getProperty("myNumber");
@@ -137,7 +120,7 @@ class DatarunpremiumView extends Ui.DataField {
          uETAfromLap		 = mApp.getProperty("pETAfromLap");
          var uHrZones = UserProfile.getHeartRateZones(UserProfile.getCurrentSport());
          var uCCnumber	     = mApp.getProperty("pCCnumber");
-
+          	 
         if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
             unitP = 1609.344;
         }
@@ -245,7 +228,7 @@ class DatarunpremiumView extends Ui.DataField {
 				Averagespeedinmper3sec= (uRoundedPace) ? unitP/(Math.round( (unitP/(Pace1+Pace2+Pace3)*3) / 5 ) * 5) : (Pace1+Pace2+Pace3)/3;
 				CurrentSpeedinmpersec= (uRoundedPace) ? unitP/(Math.round( unitP/CurrentSpeedinmpersec / 5 ) * 5) : CurrentSpeedinmpersec;
 		}
-
+		
         var mRacehour = uRacetime.substring(0, 2);
         var mRacemin = uRacetime.substring(3, 5);
         var mRacesec = uRacetime.substring(6, 8);
@@ -411,17 +394,4 @@ class DatarunpremiumView extends Ui.DataField {
     	return val + (val >> 5);
 	}    
 
-}
-
-(:background)
-class TempBgServiceDelegate extends Toybox.System.ServiceDelegate {
-
-	function initialize() {
-		System.ServiceDelegate.initialize();
-	}
-
-	function onTemporalEvent() {
-		var si=Sensor.getInfo();
-		Background.exit(si.temperature);
-	}
 }

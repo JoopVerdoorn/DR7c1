@@ -38,10 +38,8 @@ class DeviceView extends PowerView {
         dc.drawLine(129, 30,  129, 100);
 
         //! Centre vertical dividers
-        if (hideDiv == false) {
-	        dc.drawLine(79,  100,  79,  169);
-    	    dc.drawLine(178, 100,  178, 169);
-    	}
+        dc.drawLine(79,  100,  79,  169);
+        dc.drawLine(178, 100,  178, 169);
 
         //! Bottom vertical divider
         dc.drawLine(129, 169, 129, 237);
@@ -77,13 +75,6 @@ class DeviceView extends PowerView {
        		}       	
 		}
 		
-//! 		if (jTimertime == 0) {
-//! 	    	if (ID0 != 3624 and ID0 != 3588 and ID0 != 3762 and ID0 != 3761 and ID0 != 3757 and ID0 != 3758 and ID0 != 3759) {
-//! 		    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-//! 				dc.drawText(130, 173, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
-//! 		    }
-//! 		}
-		
 		//! Bottom battery indicator
 	 	var stats = Sys.getSystemStats();
 		var pwr = stats.battery;
@@ -102,8 +93,7 @@ class DeviceView extends PowerView {
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 
 		if (licenseOK == true) {
-      		dc.drawText(130, 40, Graphics.FONT_XTINY, "Datarun prem 7m c1", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-      		dc.drawText(130, 70, Graphics.FONT_XTINY, "Version " + appversion, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+      		dc.drawText(130, 40, Graphics.FONT_XTINY, "DR7c1", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(130, 120, Graphics.FONT_TINY, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(81, 160, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(180, 160, Graphics.FONT_MEDIUM, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
