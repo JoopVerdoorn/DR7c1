@@ -44,9 +44,17 @@ class DeviceView extends PowerView {
         
         //! Bottom horizontal divider
         dc.drawLine(53, 219, 187, 219);
+        
+        //! Display GPS accuracy
+        dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
+        dc.fillRectangle(10, 5, 64, 23); 
+		if (uMilClockAltern == 1) {
+		   dc.fillRectangle(183, 5, 55, 23);
+		} else {
+		   dc.fillRectangle(165, 5, 55, 23);
+		}
 
-		//! Display metrics
-        dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 
 		myTime = Toybox.System.getClockTime(); 
     	strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d");
@@ -56,6 +64,7 @@ class DeviceView extends PowerView {
 			dc.drawText(120, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
 		}
 
+		//! Display metrics        
 		for (var i = 1; i < 8; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
 	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"069,067,073,013,077,073,037");
@@ -99,10 +108,13 @@ class DeviceView extends PowerView {
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 	
 		if (licenseOK == true) {
-      		dc.drawText(120, 40, Graphics.FONT_XTINY, "DR7c1", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(120, 120, Graphics.FONT_TINY, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(81, 160, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(180, 160, Graphics.FONT_XTINY, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			if (c0Version == true) {
+				dc.drawText(81, 190, Graphics.FONT_XTINY, "C-Code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(160, 190, Graphics.FONT_XTINY, CCode, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			}
 		} else {
       		dc.drawText(120, 33, Graphics.FONT_XTINY, "License needed !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       		dc.drawText(120, 63, Graphics.FONT_XTINY, "Run is recorded though", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);

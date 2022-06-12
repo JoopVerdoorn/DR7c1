@@ -45,31 +45,41 @@ class DeviceView extends PowerView {
         //! Bottom vertical divider
         dc.drawLine(109, 142, 109, 202);
 
-		//! Display metrics
-        dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
-
-		myTime = Toybox.System.getClockTime(); 
-    	strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d"); 		
-		//! Show clock with current time in top
-		if (uMilClockAltern == 0) {	
-			dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+		//! Display GPS accuracy
+        dc.setColor(mGPScolor, Graphics.COLOR_TRANSPARENT);
+        dc.fillRectangle(10, 5, 64, 21); 
+		if (uMilClockAltern == 1) {
+		   dc.fillRectangle(162, 5, 55, 21);
+		} else {
+		   dc.fillRectangle(145, 5, 55, 21);
 		}
-	
+
+		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
+
+		//! Show clock with current time in top
+		myTime = Toybox.System.getClockTime(); 
+    	strTime = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d"); 
+    	
+    	//! Show military clock in top
+		if (uMilClockAltern == 0) {			
+		    dc.drawText(108, -4, Graphics.FONT_MEDIUM, strTime, Graphics.TEXT_JUSTIFY_CENTER);
+	    }
+	    
 		for (var i = 1; i < 8; ++i) {
 	    	if ( i == 1 ) {			//!upper row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,063,065,015,067,062,036");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"062,061,064,007,072,062,034");
 	       	} else if ( i == 2 ) {	//!upper row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"154,063,163,114,067,152,036");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"154,061,163,110,050,152,034");
 	       	} else if ( i == 3 ) {  //!middle row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"031,121,000,000,000,033,092");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"031,119,000,000,000,033,092");
 	       	} else if ( i == 4 ) {	//!middle row, middle
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"107,121,000,000,000,109,092");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"107,119,000,000,000,109,092");
 	       	} else if ( i == 5 ) {  //!middle row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"183,121,000,000,000,183,092");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"183,120,000,000,000,183,092");
 	       	} else if ( i == 6 ) {	//!lower row, left
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"063,163,065,015,157,073,191");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"063,163,064,008,152,073,191");
 	       	} else if ( i == 7 ) {	//!lower row, right
-	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"150,163,161,112,167,140,191");
+	    		Formatting(dc,i,fieldValue[i],fieldFormat[i],fieldLabel[i],"150,163,163,109,175,140,191");
        		}       	
 		}
  
@@ -98,10 +108,13 @@ class DeviceView extends PowerView {
 		dc.setColor(mColourFont, Graphics.COLOR_TRANSPARENT);
 	
 		if (licenseOK == true) {
-      		dc.drawText(109, 36, Graphics.FONT_XTINY, "DR7c1", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(109, 109, Graphics.FONT_TINY, "Registered !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(74, 145, Graphics.FONT_XTINY, "License code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 			dc.drawText(164, 145, Graphics.FONT_XTINY, mtest, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			if (c0Version == true) {
+				dc.drawText(81, 170, Graphics.FONT_XTINY, "C-Code: ", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+				dc.drawText(140, 170, Graphics.FONT_XTINY, CCode, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+			}
 		} else {
       		dc.drawText(109, 30, Graphics.FONT_XTINY, "License needed !!", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
       		dc.drawText(109, 57, Graphics.FONT_XTINY, "Run is recorded though", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
